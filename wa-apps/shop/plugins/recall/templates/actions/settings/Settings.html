@@ -1,0 +1,570 @@
+<link href="{$wa_url}wa-apps/shop/plugins/recall/css/settings.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="{$wa_url}wa-apps/shop/plugins/recall/js/settings_options.js"></script>
+<script type="text/javascript" src="{$wa_url}wa-apps/shop/plugins/recall/js/settings_status.js"></script>
+<script type="text/javascript" src="{$wa_url}wa-apps/shop/plugins/recall/js/settings_fields.js"></script>
+<h1>Обратный звонок RECALL</h1>
+<div class="fields form rc_settings_wrapper">
+	<hr>
+	<h2>Сервис и текстовый контент</h2>
+	<form class="rc_textcontent">
+		<div class="field">
+			<div class="name">Включить функцию "Спросить о товаре"</div>
+			<div class="value">
+				<input type="checkbox" name="tc[askaboutproduct]" class="rc_textcontent_value" {if $rc_sys_settings.askaboutproduct}checked{/if}>
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Защита формы отправки при помощи CAPTCHA</div>
+			<div class="value">
+				<input type="checkbox" name="tc[captcha]" class="rc_textcontent_value" {if $rc_sys_settings.captcha}checked{/if}>
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Запрашивать e-mail покупателя</div>
+			<div class="value">
+				<select name="tc[askforemail]" class="rc_textcontent_value">
+					<option value="yes" {if $rc_sys_settings.askforemail == 'yes'}selected{/if}>Да, обязательно</option>
+					<option value="no" {if $rc_sys_settings.askforemail == 'no'}selected{/if}>Нет, не спрашивать</option>
+					<option value="nevermind" {if $rc_sys_settings.askforemail == 'nevermind'}selected{/if}>Спрашивать, но не требовать обязательно</option>
+				</select>
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Включить e-mail уведомления о новых запросах</div>
+			<div class="value">
+				<input type="checkbox" name="tc[notification]" class="rc_textcontent_value" {if $rc_sys_settings.notification}checked{/if}>
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Отсылать e-mail уведомления на адрес</div>
+			<div class="value">
+				<input type="text" name="tc[adminmail]" class="rc_textcontent_value" value="{$rc_sys_settings.adminmail}"><br>
+				<span class="hint">Обязательно заполните, если хотите получать уведомления о запросах</span>
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Указать в поле "от кого этот адрес"</div>
+			<div class="value">
+				<input type="text" name="tc[recallmail]" class="rc_textcontent_value" value="{$rc_sys_settings.recallmail}"><br>
+				<span class="hint">Обязательно заполните, если хотите получать уведомления о запросах</span>
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Тема сообщения для уведомлений</div>
+			<div class="value">
+				<input type="text" name="tc[nsubject]" class="rc_textcontent_value" value="{$rc_sys_settings.nsubject}">
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Заголовок окна</div>
+			<div class="value">
+				<input type="text" name="tc[dheader]" class="rc_textcontent_value" value="{$rc_sys_settings.dheader}">
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Дисклеймер окна</div>
+			<div class="value">
+				<input type="text" name="tc[dwindow]" class="rc_textcontent_value" value="{$rc_sys_settings.dwindow}">
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Описание поля имени</div>
+			<div class="value">
+				<input type="text" name="tc[dname]" class="rc_textcontent_value" value="{$rc_sys_settings.dname}">
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Описание поля телефона</div>
+			<div class="value">
+				<input type="text" name="tc[dphone]" class="rc_textcontent_value" value="{$rc_sys_settings.dphone}">
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Описание поля email</div>
+			<div class="value">
+				<input type="text" name="tc[demail]" class="rc_textcontent_value" value="{$rc_sys_settings.demail}">
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Описание поля комментария</div>
+			<div class="value">
+				<input type="text" name="tc[dcomment]" class="rc_textcontent_value" value="{$rc_sys_settings.dcomment}">
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Текст на кнопке отправки</div>
+			<div class="value">
+				<input type="text" name="tc[dsubmit]" class="rc_textcontent_value" value="{$rc_sys_settings.dsubmit}">
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Сообщение об успешной отправке</div>
+			<div class="value">
+				<input type="text" name="tc[dsuccess]" class="rc_textcontent_value" value="{$rc_sys_settings.dsuccess}"><br>
+				<span class="hint">Вы можете использовать плейсхолдер <b>%req_num%</b> для указания номера запроса</span>
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Имя вкладки в бекенде</div>
+			<div class="value">
+				<input type="text" name="tc[tab_name]" class="rc_textcontent_value" value="{$rc_sys_settings.tab_name}">
+			</div>
+		</div>
+		<div class="field">
+			<div class="name">Текст на кнопке "Спросить о товаре"</div>
+			<div class="value">
+				<input type="text" name="tc[askaboutproducttext]" class="rc_textcontent_value" value="{$rc_sys_settings.askaboutproducttext}"><br>
+			</div>
+		</div>
+		<br><br>
+		<input type="submit" class="rc_button rc_button_textcontent" value="Сохранить настройки"/>
+		<div class="rc_saving rc_saving_text_content"><div class="rc_saving_preloader"></div>Подождите, идет сохранение настроек..</div>
+	</form>
+	<hr>
+	<h2>Статусы запросов</h2>
+	<div class="field">
+		<div class="name">Добавить статус</div>
+		<div class="value">
+			<table>
+				<tr>
+					<td style="padding-right: 10px;">Имя:</td> 
+					<td>
+						<input type="text" class="rc_addstatus_text"><br>
+						<span class='hint'>Например, "Отвеченные"</span>
+					</td>
+				</tr>
+				<tr>
+					<td style="padding-right: 10px;">Подсветка:</td>
+					<td>
+						<input type="text" class="rc_addstatus_color" value="#03c"><br>
+						<span class='hint'>Для CSS, Например, "#03c" или "blue"</span>
+					</td>
+				</tr>
+			</table>
+			<input type="button" class="rc_addstatus" value="Добавить">
+			<span class="rc_status_adding">Подождите..</span>
+		</div>
+	<div>
+	<div class="field rc_s_table">
+		<table class="zebra rc_table rc_status_table s-routing ui-sortable">
+			<tr class="header"><th>ID</th><th>Имя</th><th>Подсветка</th><th>Кол-во запросов</th><th>Действия</th></tr>
+			{foreach $rc_status as $rc_status_item}
+				<tr class="item_tr">
+					<td><div class="rc_status_td"><a style="display:inline"><i class="icon16 sort"></i></a>{$rc_status_item.id}</div></td>
+					<td><input type="text" class="rc_status_name" data-itemid="{$rc_status_item.id}" value="{$rc_status_item.name}"></td>
+					<td><input type="text" class="rc_status_color" data-itemid="{$rc_status_item.id}" value="{$rc_status_item.color}"></td>
+					<td>{$rc_status_item.request_count}</td>
+					<td>
+						<i data-itemid="{$rc_status_item.id}" class="icon16 rc_icon delete rc_delete_status"></i>
+						<i data-itemid="{$rc_status_item.id}" class="rc_icon rc_save rc_save_inactive rc_save_status"></i>
+					</td>
+				</tr>
+			{/foreach}
+		</table>
+		<div class="rc_status_delconfirm">
+			<div class="rc_hint_info">Новый статус для запросов, которые имеют удаляемый статус <span class="rc_removed_name"></span></div>
+			<input type="hidden" value="" class="rc_removestatus_removeid">
+			<select class="rc_removestatus_newstatus">
+			</select>
+			<input type="button" class="rc_button rc_button_red rc_button_delstatus" value="Присвоить запросам с новый статус и удалить выбранный"/>
+			<input type="button" class="rc_button rc_button_yellow rc_button_canceldel" value="Отмена"/>
+		</div>
+	<div>
+	<hr>
+	<h2>Дополнительные поля</h2>
+	<div class="field">
+		<input type="button" class="rc_add_ext_field" value="Добавить поле" data-count="0"><br><br>
+		<form class="rc_ext_fields_form">
+			<table class="zebra rc_table rc_fields_table">
+				<tr class="header"><th></th><th>Имя</th><th>Тип</th><th>Вид.</th><th>Обяз.</th><th>Значения</th><th></th></tr>
+			</table>
+			<input type="submit" class="rc_button rc_save_fields" value="Сохранить настройки дополнительных полей"/>
+			<div class="rc_saving rc_saving_fields"><div class="rc_saving_preloader"></div>Подождите, идет сохранение дополнительных полей..</div>
+		</form>
+	</div>
+	<hr>
+	<h2>Внешний вид</h2>
+	<form id="rc_routing_form" class="rc_routing_form">
+	<div class="field">
+		<div class="name">Маршрутизация и оформление</div>
+		<div class="value">
+			{foreach $rc_routing as $rc_skey=>$rc_site}
+				<div class="rc_route_sitename">{$rc_skey}</div>
+				<table class="zebra rc_table">
+				<tr class="header"><th>URL</th><th>APPID</th><th>Тема оформления</th></tr>
+				{foreach $rc_site as $rc_rkey=>$rc_route}
+					<tr>
+						<td>{$rc_route.url}</td>
+						<td>{$rc_route.app}</td>
+						<td>
+							<select name="rc_routing[{$rc_skey}][{$rc_route.url}]" class="rc_url_theme">
+								<option value="off">Не использовать плагин</option>
+								{foreach $rc_themes as $rc_theme}
+									<option value="{$rc_theme.id}" {if isset($rc_route.rc_theme)}{if $rc_route.rc_theme == $rc_theme.id}selected="true"{/if}{/if}>{$rc_theme.name}</option>
+								{/foreach}
+							</select>
+						</td>
+					</tr>
+				{/foreach}
+				</table>
+			{/foreach}
+		</div>
+	</div>
+	<input type="submit" class="rc_button rc_save_routing" value="Сохранить настройки внешнего вида"/>
+	<div class="rc_saving rc_saving_routing"><div class="rc_saving_preloader"></div>Подождите, идет сохранение внутрисистемной маршрутизации..</div>
+	</form>
+	<hr>
+	<h2>Управление темами оформления</h2>
+	<h3>Выберите тему оформления</h3>
+	<div class="field">
+        <div class="name">Тема оформления</div>
+		<div class="value">
+			<select name="theme" class="rc_theme_selector">
+				{foreach $rc_themes as $rc_theme}
+					<option value="{$rc_theme.id}" data-theme-cover="{$wa_url}wa-apps/shop/plugins/recall{$rc_theme.cover}">{$rc_theme.name}</option>
+				{/foreach}
+			</select>
+			<br>
+			<span class="hint">Выберите тему оформления диалогового окна из списка, чтобы настроить ее параметры</span>
+		</div>
+    </div>
+	<div class="field">
+		<div class="name">Обложка темы оформления</div>
+		<div class="value">
+			<img class="rc_theme_cover" src="">
+		</div>
+	</div>
+	<h3>Настройки темы оформления</h3>
+	<ul class="rc_theme_menu">
+		<li class="rc_theme_css rc_selected">Стили</li>
+		<li class="rc_theme_images">Изображения</li>
+		<li class="rc_theme_settings">Встраивание</li>
+		<li class="rc_theme_info">Информация</li>
+		<li class="rc_right rc_theme_reset">Сброс всех изменений</li>
+	</ul>
+	<div class="rc_theme_content">
+		<div class="rc_theme_content_info" style="display: none;">
+			<div class="rc_hint_info">О теме дизайна</div>
+			<div class="rc_theme_about">
+			</div>
+		</div>
+		<div class="rc_theme_content_css">
+			<div class="rc_hint_info">Используйте это поле, чтобы тонко настройть тему оформления</div>
+			<textarea class="rc_edit_css rc_codemirror"></textarea>
+			<textarea class="rc_hidden_css"></textarea>
+			<div class="rc_save_css rc_css_button rc_button">Сохранить изменения CSS</div>
+			<div class="rc_reset_css rc_css_button rc_button rc_button_red">Сбросить изменения CSS</div>
+			<div class="rc_saving rc_saving_css"><div class="rc_saving_preloader"></div>Подождите, идет сохранение файла стилей..</div>
+		</div>
+		<div class="rc_theme_content_images" style="display: none;">
+			<div class="rc_hint_info">Управление графическими элементами</div>
+			<form id="rc_image_form" class="rc_image_form" enctype="multipart/form-data">
+				{$wa->csrf()}
+				<input type="hidden" name="theme_id" class="rc_image_form_theme_id" value=""/>
+				<div class="rc_image_container">
+					<div class="rc_image_caption">Фон шапки</div>
+					<div class="rc_image_preview">
+						<img class="rc_image_hat" src="">
+					</div>
+					<input type="file" name="rc_image_hat" class="rc_image_file"><br>
+					<span class="hint">Фон шапки окна запроса обратного звонка, расширение *.png</span>
+				</div>
+				<div class="rc_image_container">
+					<div class="rc_image_caption">Кнопка "Закрыть"</div>
+					<div class="rc_image_preview">
+						<img class="rc_image_close" src="">
+					</div>
+					<input type="file" name="rc_image_close" class="rc_image_file"><br>
+					<span class="hint">Вид кнопки "закрыть" в шапке окна запроса, обычное состояние, расширение *.png</span>
+				</div>
+				<div class="rc_image_container">
+					<div class="rc_image_caption">Кнопка "Закрыть" в активном состоянии</div>
+					<div class="rc_image_preview">
+						<img class="rc_image_close_hover" src="">
+					</div>
+					<input type="file" name="rc_image_close_hover" class="rc_image_file"><br>
+					<span class="hint">Вид кнопки "закрыть" в шапке окна запроса, наведен курсор, расширение *.png</span>
+				</div>
+				<div class="rc_image_container">
+					<div class="rc_image_caption">Верхняя часть рабочей области</div>
+					<div class="rc_image_preview">
+						<img class="rc_image_header" src="">
+					</div>
+					<input type="file" name="rc_image_header" class="rc_image_file"><br>
+					<span class="hint">Накладывается на верхнюю часть рабочей области, прямо под шапку, расширение *.png</span>
+				</div>
+				<div class="rc_image_container">
+					<div class="rc_image_caption">Нижняя часть рабочей области</div>
+					<div class="rc_image_preview">
+						<img class="rc_image_footer" src="">
+					</div>
+					<input type="file" name="rc_image_footer" class="rc_image_file"><br>
+					<span class="hint">Накладывается на нижнюю часть рабочей области, в самый низ окна, расширение *.png</span>
+				</div>
+				<div class="rc_image_container">
+					<div class="rc_image_caption">Кнопка "Отправить заявку"</div>
+					<div class="rc_image_preview">
+						<img class="rc_image_send" src="">
+					</div>
+					<input type="file" name="rc_image_send" class="rc_image_file"><br>
+					<span class="hint">Фон кнопки отправки запроса, расширение *.png</span>
+				</div>
+				<div class="rc_image_container">
+					<div class="rc_image_caption">Кнопка "Отправить заявку" в активном состоянии</div>
+					<div class="rc_image_preview">
+						<img class="rc_image_send_hover" src="">
+					</div>
+					<input type="file" name="rc_image_send_hover" class="rc_image_file"><br>
+					<span class="hint">Фон кнопки отправки запроса, наведен курсор, расширение *.png</span>
+				</div>
+				<div class="rc_image_container">
+					<div class="rc_image_caption">Ярлык вызова окна обратного звонка</div>
+					<div class="rc_image_preview">
+						<img class="rc_image_label" src="">
+					</div>
+					<input type="file" name="rc_image_label" class="rc_image_file"><br>
+					<span class="hint">Ярлык, прикрепленный к краю экрана, расширение *.png</span>
+				</div>
+				<input type="submit" class="rc_button rc_save_images" value="Сохранить набор изображений"/>
+				<div class="rc_saving rc_saving_images"><div class="rc_saving_preloader"></div>Подождите, идет сохранение набора изображений..</div>
+			</form>
+		</div>
+		<div class="rc_theme_content_settings" style="display: none;">
+			<div class="rc_hint_info">Настройки вызова окна запроса</div>
+			<form id="rc_settings_form" class="rc_settings_form" enctype="multipart/form-data">
+				<input type="hidden" name="theme_id" class="rc_settings_form_theme_id" value=""/>
+				<div class="rc_theme_about_item">
+					<div class="rc_theme_about_name">Тип встаивания</div>
+					<div class="rc_theme_about_value">
+						<input type="radio" name="itype" value="label" class="rc_settings_radio"><span class="rc_settings_radio_label">Ярлыком сбоку страницы</span><br>
+						<input type="radio" name="itype" value="class" class="rc_settings_radio"><span class="rc_settings_radio_label">Через нажатие на элемент</span>
+					</div>
+				</div>
+				<div class="rc_theme_about_item">
+					<div class="rc_theme_about_name">Якорный класс</div>
+					<div class="rc_theme_about_value">
+						<input type="text" name="hook" class="rc_settings_text"><br>
+						<span class="hint">При нажатии на элемент с данным классом будет показываться окно запроса, если выбран тип встраивания "Через нажатие на элемент"</span>
+					</div>
+				</div>
+				<input type="submit" class="rc_button rc_save_settings" value="Сохранить настройки"/>
+				<div class="rc_saving rc_saving_settings"><div class="rc_saving_preloader"></div>Подождите, идет сохранение настроек..</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="clear-left"></div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var themeCodemirror;
+		
+		$(".rc_theme_cover").attr("src", $(".rc_theme_selector").children("option:selected").attr("data-theme-cover"));
+		
+		$(".rc_codemirror").each(function () {
+            themeCodemirror = CodeMirror.fromTextArea(this, {
+                mode: "text/css",
+                tabMode: "indent",
+                lineWrapping: true,
+				onChange: function() {
+					if($(".rc_save_css").hasClass("first_usage")) {
+						$(".rc_save_css").removeClass("first_usage");
+					}
+					else {
+						$(".rc_save_css").addClass("rc_button_yellow");
+					}
+				}
+            });
+        });
+		
+		$.post('?plugin=recall&module=backend&action=loadtheme', 'theme_id='+$(".rc_theme_selector").val(), function(JData) { 
+			// CSS
+			$(".rc_theme_css").trigger("click");
+			$(".rc_save_css").addClass("first_usage");
+			themeCodemirror.setValue(JData.data.css);
+			$(".rc_hidden_css").val(JData.data.default_css);
+			// IMAGES
+			$(".rc_image_form_theme_id").val($(".rc_theme_selector").val());
+			$(".rc_image_hat").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.hat+'?nocache='+Math.random());
+			$(".rc_image_close").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.close+'?nocache='+Math.random());
+			$(".rc_image_close_hover").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.close_hover+'?nocache='+Math.random());
+			$(".rc_image_header").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.header+'?nocache='+Math.random());
+			$(".rc_image_footer").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.footer+'?nocache='+Math.random());
+			$(".rc_image_send").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.send+'?nocache='+Math.random());
+			$(".rc_image_send_hover").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.send_hover+'?nocache='+Math.random());
+			$(".rc_image_label").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.label+'?nocache='+Math.random());
+			// INFO
+			$(".rc_theme_about").html("");
+			$.each(JData.data.info, function(index, value) {
+				$(".rc_theme_about").append('\
+					<div class="rc_theme_about_item">\
+					<div class="rc_theme_about_name">'+value.name+'</div>\
+					<div class="rc_theme_about_value">'+value.data+'</div>\
+					</div>\
+				');
+			});
+			// SETTINGS
+			$(".rc_settings_form_theme_id").val($(".rc_theme_selector").val());
+			$(".rc_settings_text").val(JData.data.settings.hook);
+			$(".rc_settings_radio").attr("checked", false);
+			$(".rc_settings_radio[value='"+JData.data.settings.itype+"']").attr("checked", true);
+		} , "json");
+		
+		$(".rc_theme_selector").change(function() {
+			$(".rc_theme_cover").attr("src", $(this).children("option:selected").attr("data-theme-cover"));
+			$.post('?plugin=recall&module=backend&action=loadtheme', 'theme_id='+$(this).val(), function(JData) { 
+				// CSS
+				$(".rc_theme_css").trigger("click");
+				$(".rc_save_css").addClass("first_usage");
+				$(".rc_save_css").removeClass("rc_button_yellow");
+				themeCodemirror.setValue(JData.data.css);
+				$(".rc_hidden_css").val(JData.data.default_css);
+				// IMAGES
+				$(".rc_image_form_theme_id").val($(".rc_theme_selector").val());
+				$(".rc_image_hat").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.hat+'?nocache='+Math.random());
+				$(".rc_image_close").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.close+'?nocache='+Math.random());
+				$(".rc_image_close_hover").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.close_hover+'?nocache='+Math.random());
+				$(".rc_image_header").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.header+'?nocache='+Math.random());
+				$(".rc_image_footer").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.footer+'?nocache='+Math.random());
+				$(".rc_image_send").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.send+'?nocache='+Math.random());
+				$(".rc_image_send_hover").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.send_hover+'?nocache='+Math.random());
+				$(".rc_image_label").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.label+'?nocache='+Math.random());
+				// INFO
+				$(".rc_theme_about").html("");
+				$.each(JData.data.info, function(index, value) {
+					$(".rc_theme_about").append('\
+						<div class="rc_theme_about_item">\
+						<div class="rc_theme_about_name">'+value.name+'</div>\
+						<div class="rc_theme_about_value">'+value.data+'</div>\
+						</div>\
+					');
+				});
+				// SETTINGS
+				$(".rc_settings_form_theme_id").val($(".rc_theme_selector").val());
+				$(".rc_settings_text").val(JData.data.settings.hook);
+				$(".rc_settings_radio").attr("checked", false);
+				$(".rc_settings_radio[value='"+JData.data.settings.itype+"']").attr("checked", true);
+			} , "json");
+		});
+		
+		$(".rc_theme_css").click(function() {
+			$(".rc_theme_content_info").slideUp();
+			$(".rc_theme_content_images").slideUp();
+			$(".rc_theme_content_css").slideDown();
+			$(".rc_theme_content_settings").slideUp();
+			$(".rc_theme_info").removeClass("rc_selected");
+			$(".rc_theme_css").addClass("rc_selected");
+			$(".rc_theme_images").removeClass("rc_selected");
+			$(".rc_theme_settings").removeClass("rc_selected");
+		});
+		
+		$(".rc_theme_info").click(function() {
+			$(".rc_theme_content_info").slideDown();
+			$(".rc_theme_content_images").slideUp();
+			$(".rc_theme_content_css").slideUp();
+			$(".rc_theme_content_settings").slideUp();
+			$(".rc_theme_info").addClass("rc_selected");
+			$(".rc_theme_css").removeClass("rc_selected");
+			$(".rc_theme_images").removeClass("rc_selected");
+			$(".rc_theme_settings").removeClass("rc_selected");
+		});
+		
+		$(".rc_theme_images").click(function() {
+			$(".rc_theme_content_info").slideUp();
+			$(".rc_theme_content_images").slideDown();
+			$(".rc_theme_content_css").slideUp();
+			$(".rc_theme_content_settings").slideUp();
+			$(".rc_theme_info").removeClass("rc_selected");
+			$(".rc_theme_css").removeClass("rc_selected");
+			$(".rc_theme_images").addClass("rc_selected");
+			$(".rc_theme_settings").removeClass("rc_selected");
+		});
+		
+		$(".rc_theme_settings").click(function() {
+			$(".rc_theme_content_info").slideUp();
+			$(".rc_theme_content_images").slideUp();
+			$(".rc_theme_content_css").slideUp();
+			$(".rc_theme_content_settings").slideDown();
+			$(".rc_theme_info").removeClass("rc_selected");
+			$(".rc_theme_css").removeClass("rc_selected");
+			$(".rc_theme_images").removeClass("rc_selected");
+			$(".rc_theme_settings").addClass("rc_selected");
+		});
+		
+		$(".rc_save_css").click(function() {
+			$(".rc_saving_css").slideDown();
+			$.post('?plugin=recall&module=backend&action=savethemecss', 'theme_id='+$(".rc_theme_selector").val()+'&css='+encodeURI(themeCodemirror.getValue()), function(JData) { 
+				$(".rc_saving_css").delay(300).slideUp();
+				$(".rc_save_css").removeClass("rc_button_yellow");
+				if(JData.data.result == 'error') { alert(JData.data.error); }
+			} , "json");
+		});
+		
+		$(".rc_image_file").change(function() { $(".rc_save_images").addClass("rc_button_yellow"); });
+		
+		$(".rc_image_form").submit(function(event) {
+			$(".rc_saving_images").slideDown();
+			$.ajax( {
+				url: '?plugin=recall&module=backend&action=savethemeimages',
+				data: new FormData(document.getElementById("rc_image_form")),
+				processData: false,
+				contentType: false,
+				dataType: "json",
+				type: 'POST',
+				success: function(JData) {
+					
+					var errors = JData.data.errors;
+					if(errors.length > 0) { alert(errors); }
+					
+					// IMAGES
+					$(".rc_image_hat").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.hat+'?nocache='+Math.random());
+					$(".rc_image_close").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.close+'?nocache='+Math.random());
+					$(".rc_image_close_hover").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.close_hover+'?nocache='+Math.random());
+					$(".rc_image_header").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.header+'?nocache='+Math.random());
+					$(".rc_image_footer").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.footer+'?nocache='+Math.random());
+					$(".rc_image_send").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.send+'?nocache='+Math.random());
+					$(".rc_image_send_hover").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.send_hover+'?nocache='+Math.random());
+					$(".rc_image_label").attr("src", "{$wa_url}"+JData.data.basedir+JData.data.img.label+'?nocache='+Math.random());
+					
+					$(".rc_saving_images").delay(300).slideUp();
+					$(".rc_save_images").removeClass("rc_button_yellow");
+				}
+			});
+			return false;
+		});
+		
+		$(".rc_url_theme").change(function() { $(".rc_save_routing").addClass("rc_button_yellow"); });
+		
+		$(".rc_routing_form").submit(function(event) {
+			$(".rc_saving_routing").slideDown();
+			$.post('?plugin=recall&module=backend&action=saverouting', $(this).serialize(), function(JData) {
+				$(".rc_saving_routing").delay(300).slideUp();
+				$(".rc_save_routing").removeClass("rc_button_yellow");
+			} , "json");
+			return false;
+		});
+		
+		$(".rc_reset_css").click(function() {
+			if(confirm("Вы уверены, что хотите восстановить значения css по умолчанию?"))
+			{
+				themeCodemirror.setValue($(".rc_hidden_css").val());
+			}
+		});
+		
+		$(".rc_theme_reset").click(function() {
+			if(confirm("Вы уверены, что хотите сбросить все изменения темы дизайна?")) {
+				$.post('?plugin=recall&module=backend&action=resettheme', 'theme_id='+$(".rc_theme_selector").val(), function(JData) {
+					alert(JData.data.message);
+					$(".rc_theme_selector").trigger('change');
+				} , "json");
+			}
+		});
+		
+		$(".rc_textcontent_value").keyup(function() {
+			$(".rc_button_textcontent").addClass("rc_button_yellow");
+		});
+		
+		$(".rc_textcontent_value").change(function() {
+			$(".rc_button_textcontent").addClass("rc_button_yellow");
+		});
+	});
+</script>

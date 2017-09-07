@@ -1,0 +1,9 @@
+{if $category.id == 558}
+    {include file="category.catalog.html"}
+{elseif count($breadcrumbs) == 1 && $breadcrumbs[0].url == '/catalog/optika/'}
+    {include file="category.mark.html"}
+{elseif count($breadcrumbs) == 2 && $breadcrumbs[0].url == '/catalog/optika/'}
+    {include file="category.model.html"}
+{elseif count($breadcrumbs) == 3 && $breadcrumbs[0].url == '/catalog/optika/'}
+    {include file="category.mod.html"}
+{/if}

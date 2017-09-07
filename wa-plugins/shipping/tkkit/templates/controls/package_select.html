@@ -1,0 +1,80 @@
+<div class="block padding" style="padding-left: 0" id="s-plugin-tkkit-package-select">
+    <table class="zebra">
+        <thead>
+        <tr class="white">
+            <th colspan="2">Вес отправления (кг.)</th>
+            <th>&nbsp;</th>
+            <th>Размер упаковки (см.)</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr class="white">
+            <td colspan="3">
+                <a href="javascript:void(0)" class="inline-link s-plugin-tkkit-add-pkg-rule-btn"><i class="icon16 add"></i> <b><i>Добавить
+                            размер</i></b></a>
+            </td>
+            <td><span class="hint">ДxШxВ - средние размеры типичной посылки, (длина)x(ширина)x(высота). <b>Используйте
+                        латинскую x (икс) в качестве разделителя!</b></span></td>
+            <td></td>
+        </tr>
+        </tfoot>
+        {foreach $values as $value}
+            <tr class="s-plugin-tkkit-pkg">
+                <td class="min-width">&gt;</td>
+                <td>
+                    <input type="text" name="{$namespace}[{$value@index}][min_weight]"
+                           value="{$value.min_weight|escape}">
+                </td>
+                <td>→</td>
+                <td>
+                    <input type="text" name="{$namespace}[{$value@index}][package]"
+                           value="{$value.package|escape}">
+                </td>
+                <td><a href="javascript:void(0)" class="s-plugin-tkkit-remove-pkg-rule-btn" title="Удалить"><i
+                                class="icon16 delete"></i>Удалить</a></td>
+            </tr>
+        {/foreach}
+    </table>
+    <script type="text/javascript">
+        {literal}
+        $(function () {
+            $('#s-plugin-tkkit-package-select')
+                    .on('click', '.s-plugin-tkkit-add-pkg-rule-btn', function () {
+                        var $this = $(this);
+                        var $table = $this.closest('table');
+                        var $last = $table.find('tr.s-plugin-tkkit-pkg:last');
+                        var $clone = $last.clone();
+
+                        $clone.find('input[name$="[min_weight]"]').each(function () {
+                            var $input = $(this);
+                            var name = $input.attr('name');
+                            $input.attr('name', name.replace(/\[(\d+)\]\[min_weight\]/, function (str, p1) {
+                                return '[' + (parseInt(p1, 10) + 1) + '][min_weight]';
+                            }));
+                            $input.val('');
+                        });
+                        $clone.find('input[name$="[package]"]').each(function () {
+                            var $input = $(this);
+                            var name = $input.attr('name');
+                            $input.attr('name', name.replace(/\[(\d+)\]\[package\]/, function (str, p1) {
+                                return '[' + (parseInt(p1, 10) + 1) + '][package]';
+                            }));
+                            $input.val('');
+                        });
+                        $last.after($clone);
+                        return false;
+                    })
+                    .on('click', '.s-plugin-tkkit-remove-pkg-rule-btn', function () {
+                        var $this = $(this);
+                        var $table = $this.closest('table');
+                        if ($('tr.s-plugin-tkkit-pkg', $table).length > 1) {
+                            $this.closest('tr').remove();
+                        } else {
+                            $this.closest('tr').find('input').val('');
+                        }
+                    });
+        });
+        {/literal}
+    </script>
+</div>

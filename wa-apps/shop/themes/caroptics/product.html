@@ -1,0 +1,359 @@
+{include file="breadcrumb.html"}
+<link href="{$wa_theme_url}css/jquery.formstyler.css" rel="stylesheet">
+<div class="product-content">
+    <div class="entry-title entry-header">
+        {include file="soc-widget.html"}
+        <h2>{$product.name}</h2>
+    </div>
+    <div class="product-info">
+        <div class="product-gallery">
+            <div class="img">
+                <div class="gallery_main {if count($product.images)>1}owl-carousel{/if}">
+                    {if $product.images}
+                        {foreach $product.images as $image}
+                            <a href="{$wa->shop->imgUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext, 'filename' => $image.filename], '950')}" data-fancybox="product-gallery">
+                                <img src="{$wa->shop->imgUrl(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext, 'filename' => $image.filename], '388')}">
+                            </a>
+                        {/foreach}
+                    {else}
+                        {$wa->shop->productImgHtml($product, '388', ['itemprop' => 'image', 'alt' => $product.name, 'default' => "`$wa_theme_url`img/dummy200.png"])}
+                    {/if}
+                </div>
+            </div>
+            {if $product.images}
+                <img src="{$wa_theme_url}img/real.png" alt="" class="real">
+            {/if}
+            {if count($product.images)>1}
+                <div class="owl owl-carousel">
+                    {foreach $product.images as $image}
+                        {$wa->shop->imgHtml(['id' => $image.id, 'product_id' => $product.id, 'ext' => $image.ext, 'filename' => $image.filename], '388', ['alt' => $product.name, 'title' => $product.name])}
+                    {/foreach}
+                </div>
+            {/if}
+        </div>
+        <div class="product-details">
+            <div class="tech mobile">
+                <p>
+                    {strip}
+                        {foreach $product.features as $f_code => $f_value}
+                            {$features[$f_code].name|escape}:&nbsp;
+                            {if is_array($f_value)}
+                                {if $features[$f_code].type == 'color'}
+                                    {implode('<br /> ', $f_value)}
+                                {else}
+                                    {implode(', ', $f_value)}
+                                {/if}
+                            {else}
+                                {$f_value}
+                            {/if}
+                            {if !$f_value@last},&nbsp;{/if}
+                        {/foreach}
+                    {/strip}
+                </p>
+            </div>
+            {include file="product.cart.html" inline}
+            <div class="tech-detail desc">
+                <div class="table-info">
+                    {$max_feature=8}
+                    {foreach $product.features as $f_code => $f_value}
+                        {if $f_value@iteration>$max_feature}
+                            {break}
+                        {/if}
+                        <div {if $f_value@iteration>$max_feature}class="feature_show_hide" style="display: none"{/if}>
+                            <p class="dotted"><span>{$features[$f_code].name|escape}</span></p>
+                            <p>
+                                {if is_array($f_value)}
+                                    {if $features[$f_code].type == 'color'}
+                                        {implode('<br /> ', $f_value)}
+                                    {else}
+                                        {implode(', ', $f_value)}
+                                    {/if}
+                                {else}
+                                    {$f_value}
+                                {/if}
+                            </p>
+                        </div>
+                    {/foreach}
+                    {if count($product.features)>$max_feature}
+                        <span class="green-href feature_show_all" data-scroll=".detailed-info">Все характеристики</span>
+                    {/if}
+                </div>
+                <div class="delivery-info">
+                    <div class="block">
+                        <div class="img">
+                            <img src="{$wa_theme_url}img/delivery1.png" alt="">
+                        </div>
+                        <div class="text">
+                            <p>Заказ можно забрать самостоятельно</p>
+                            <a href="#" class="green-href">Самовывоз</a>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="img">
+                            <img src="{$wa_theme_url}img/delivery2.png" alt="">
+                        </div>
+                        <div class="text">
+                            <p>Всегда дополнительно упаковываем </p>
+                            <a href="#" class="green-href">Как заказ доедет целым?</a>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div class="img">
+                            <img src="{$wa_theme_url}img/delivery3.png" alt="">
+                        </div>
+                        <div class="text">
+                            <p>Принимаем возврат в течение 14 дней после получения</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="working_shipping.html"}
+    {$category_product=$wa->shop->category($product.category_id)}
+    {$upselling = $product->upSelling(12)}
+    {if $upselling}
+        <div class="related drop">
+            <div class="entry-title">
+                <h3 data-target="#id1" class="accord">С {$product.name} часто покупают</h3>
+                <a href="{$wa_app_url}catalog/{$category_product.url}" class="show-all desc">Посмотреть все запчасти на {$category_product.name}</a>
+            </div>
+            <div id="id1" class="acc-target">
+                <div class="owl-related ">
+                    {include file="product.list.html" products=$upselling}
+                </div>
+            </div>
+        </div>
+    {/if}
+
+    {$crossselling = $product->crossSelling(12)}
+    {if $crossselling}
+        <div class="related drop">
+            <div class="entry-title">
+                <h3 data-target="#id1" class="accord">С {$product.name} часто покупают</h3>
+                <a href="{$wa_app_url}catalog/{$category_product.url}" class="show-all desc">Посмотреть все запчасти на {$category_product.name}</a>
+            </div>
+            <div id="id1" class="acc-target">
+                <div class="owl-carousel product_list_slider">
+                    {include file="product.list.html" products=$crossselling}
+                </div>
+            </div>
+        </div>
+    {/if}
+    <div class="detailed-info drop">
+        <div class="entry-title">
+            <h3 data-target="#id2" class="accord">Технические характеристики {$product.name}</h3>
+        </div>
+        <div class="detailed acc-target" id="id2">
+            <div class="w50">
+                {foreach $product.features as $f_code => $f_value}
+                    <div>
+                        <p class="dotted"><span>{$features[$f_code].name|escape}</span></p>
+                        <p>
+                            {if is_array($f_value)}
+                                {if $features[$f_code].type == 'color'}
+                                    {implode('<br /> ', $f_value)}
+                                {else}
+                                    {implode(', ', $f_value)}
+                                {/if}
+                            {else}
+                                {$f_value}
+                            {/if}
+                        </p>
+                    </div>
+                {/foreach}
+            </div>
+            <div class="w50">
+                <div>
+                    <p class="dotted"><span>Артикулы для замены:</span></p>
+                    <p>217-1159L-LDEM2, 313-1111L-HS, 33101S2HG01, 217-1159L-LDEM2, 217-1159L-LDEM2, 313-1111L-HS, 33101S2HG01</p>
+                </div>
+                <div>
+                    <p class="dotted"><span>Оригинальные артикулы:</span></p>
+                    <p>217-1159L-LDEM2, 33101S2HG01, 313-1111L-HS, 313-1111L-HS</p>
+                </div>
+                <div>
+                    <p class="dotted"><span>В продаже:</span></p>
+                    <p>с 2009 года</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {include file="product.delivery.html"}
+    <div class="payment-info">
+        <div class="entry-title">
+            <h3>Способы оплаты</h3>
+        </div>
+        <div class="payment-type">
+            <div class="block">
+                <img src="{$wa_theme_url}img/payments/1.png" alt="">
+            </div>
+            <div class="block">
+                <img src="{$wa_theme_url}img/payments/2.png" alt="">
+            </div>
+            <div class="block">
+                <img src="{$wa_theme_url}img/payments/3.png" alt="">
+            </div>
+            <div class="block">
+                <img src="{$wa_theme_url}img/payments/4.png" alt="">
+            </div>
+            <div class="block">
+                <img src="{$wa_theme_url}img/payments/5.png" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="reaction-info desc">
+        <div class="entry-title">
+            <h3>Вопросы и отзывы по фаре {$category_product.name} - {$product.name}</h3>
+        </div>
+        <div class="reactions">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#tab1" role="tab" data-toggle="tab">Вопрос - ответ (5)</a></li>
+                <li><a href="#tab2" role="tab" data-toggle="tab">Отзывы (13)</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
+                    <div class="tab-info">
+                        <p>Здесь можно задать вопрос по данному товару, например, о комплектности, совместимости, особенностях или других нюансах.
+                            Вопросы о доставке, сроках поступления правильно задавать <a href="#" class="green-href">здесь</a>.</p>
+                        <p>ВНИМАНИЕ! Если вы хотите получить ответ на свой вопрос, укажите адрес электронной почты.</p>
+                        <button class="btn">Задать вопрос</button>
+                    </div>
+                    <div class="faq">
+                        <div class="item">
+                            <div class="question">
+                                <p><span class="name">Василий</span> <span class="date">23.03.17</span></p>
+                                <p class="quest-txt">Кнопка двойная или одинарная и включает сразу передние ПТФ и задние ПТФ?</p>
+                            </div>
+                            <div class="answer">
+                                <p class="title">Ответ от <span>Caroptics.ru</span>:</p>
+                                <p>Одинарная, она такая как у вас, т.е. включает задние. Чтобы включались передние нужна чать проводки по бамперу, реле и
+                                    двойная кнопка. Либо можно проложить проводку из комплекта дополнительно.</p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="question">
+                                <p><span class="name">Василий</span> <span class="date">23.03.17</span></p>
+                                <p class="quest-txt">Кнопка двойная или одинарная и включает сразу передние ПТФ и задние ПТФ?</p>
+                            </div>
+                            <div class="answer">
+                                <p class="title">Ответ от <span>Caroptics.ru</span>:</p>
+                                <p>Одинарная, она такая как у вас, т.е. включает задние. Чтобы включались передние нужна чать проводки по бамперу, реле и
+                                    двойная кнопка. Либо можно проложить проводку из комплекта дополнительно.</p>
+                            </div>
+                        </div>
+                        <button class="btn">Задать вопрос</button>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab2">
+                    <script type="text/javascript">
+                        $(function () {
+                            var loading = $('<div><i class="icon16 loading"></i>Loading...</div>');
+                            $('#tab2').html(loading);
+                            $.post('{$wa->currentUrl()}reviews/', {
+                                random: "1"
+                            }, function (html) {
+                                $('#tab2').html($(html).find('.reviews')[0].outerHTML);
+                                $('#tab2').prepend('<script type="text/javascript" src="{$wa_app_static_url}js/rate.widget.js"><\/script>').prepend('<script type="text/javascript" src="{$wa_theme_url}reviews.js"><\/script>').find('.loading').parent().remove();
+                                $('div.wa-captcha .wa-captcha-refresh, div.wa-captcha .wa-captcha-img').unbind('click').click(function () {
+                                    var div = $(this).parents('div.wa-captcha');
+                                    var captcha = div.find('.wa-captcha-img');
+                                    if (captcha.length) {
+                                        captcha.attr('src', captcha.attr('src').replace(/\?.*$/, '?rid=' + Math.random()));
+                                        captcha.one('load', function () {
+                                            //div.find('.wa-captcha-input').focus();
+                                        });
+                                    }
+                                    ;
+                                    div.find('input').val('');
+                                    return false;
+                                });
+                            });
+                        });
+                    </script>
+                    <div class="tab-info">
+                        <br>
+                        <a href="reviews/" style="    position: relative;bottom: 0" class="btn">Написать отзыв</a>
+                    </div>
+                    <h3>{sprintf('[`%s reviews`]', $product.name|escape)}</h3>
+                    <div class="faq">
+                        {foreach $reviews as $review}
+                            <div class="item">
+                                <div class="question">
+                                    <p><span class="name">{$review.author.name}</span> <span class="date">{$review.datetime|wa_datetime:"humandate"}</span></p>
+                                    <p class="quest-txt">{$review.text}</p>
+                                </div>
+                            </div>
+                        {/foreach}
+                    </div>
+                    <div class="count_url_review">
+                        {if !$reviews}
+                            <p>{sprintf('[`Be the first to <a href="%s">write a review</a> of this product!`]', 'reviews/')}</p>
+                        {else}
+                            {sprintf(_w(
+                            'Read <a href="%s">all %d review</a> on %s',
+                            'Read <a href="%s">all %d reviews</a> on %s',
+                            $reviews_total_count, false
+                            ), 'reviews/', $reviews_total_count, $product.name|escape)
+                            }
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="react-reviews mobile drop">
+        <div class="entry-title">
+            <h3 data-target="#id4" class="accord">Отзывы по фаре Honda Civic 4D (2006-2012) - 217-1159L-LDEM2</h3>
+        </div>
+        <div class="entry-content acc-target" id="id4">
+            <div class="wrapper">
+                <p>Дизайн для отзывов в макете отстутствует.</p>
+            </div>
+        </div>
+    </div>
+    <div class="react-questions mobile drop">
+        <div class="entry-title">
+            <h3 data-target="#id5" class="accord">Вопросы по фаре Honda Civic 4D (2006-2012) - 217-1159L-LDEM2</h3>
+        </div>
+        <div class="entry-content acc-target" id="id5">
+            <div class="wrapper">
+                <div class="faq">
+                    <div class="item">
+                        <div class="question">
+                            <p><span class="name">Василий</span> <span class="date">23.03.17</span></p>
+                            <p class="quest-txt">Кнопка двойная или одинарная и включает сразу передние ПТФ и задние ПТФ?</p>
+                        </div>
+                        <div class="answer">
+                            <p class="title">Ответ от <span>Caroptics.ru</span>:</p>
+                            <p>Одинарная, она такая как у вас, т.е. включает задние. Чтобы включались передние нужна чать проводки по бамперу, реле и
+                                двойная кнопка. Либо можно проложить проводку из комплекта дополнительно.</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="question">
+                            <p><span class="name">Василий</span> <span class="date">23.03.17</span></p>
+                            <p class="quest-txt">Кнопка двойная или одинарная и включает сразу передние ПТФ и задние ПТФ?</p>
+                        </div>
+                        <div class="answer">
+                            <p class="title">Ответ от <span>Caroptics.ru</span>:</p>
+                            <p>Одинарная, она такая как у вас, т.е. включает задние. Чтобы включались передние нужна чать проводки по бамперу, реле и
+                                двойная кнопка. Либо можно проложить проводку из комплекта дополнительно.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-info">
+                    <p>Здесь можно задать вопрос по данному товару, например, о комплектности, совместимости, особенностях или других нюансах.
+                        Вопросы о доставке, сроках поступления правильно задавать <a href="#" class="green-href">здесь</a>.</p>
+                    <p>ВНИМАНИЕ! Если вы хотите получить ответ на свой вопрос, укажите адрес электронной почты.</p>
+                    <button class="btn">Задать вопрос</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="payment-info-mobile"></div>
+    <div class="product-menus-mobile"></div>
+</div>

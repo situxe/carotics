@@ -1,0 +1,35 @@
+{foreach $products as $p}
+    <div class="block block-product-item">
+        <a href="{$p.frontend_url}">
+            <div class="img">
+                <div class="img_html" title="{$p.name}" style="background-image: url({$wa->shop->productImgUrl($p, '188')});">
+                </div>
+            </div>
+        </a>
+        <a href="{$p.frontend_url}" class="title">{$p.name}</a>
+    {*    <div class="reviews-short">
+            <div class="rating">
+                {for $foo=1 to 5}
+                    {if $foo<=$p.rating}
+                        <span></span>
+                    {elseif $foo>$p.rating && $foo+1<$p.rating}
+                        <span class="floor"></span>
+                    {else}
+                        <span class="empty"></span>
+                    {/if}
+                {/for}
+            </div>
+            <a href="#">{$p.rating_count} отзывов</a>
+        </div>*}
+        <div class="pricing">
+            {if $p.compare_price > 0}
+                <p class="old-price">
+                    {shop_currency_html($p.compare_price)}
+                </p>
+            {/if}
+            <p class="current-price">
+                {shop_currency_html($p.price)}
+            </p>
+        </div>
+    </div>
+{/foreach}

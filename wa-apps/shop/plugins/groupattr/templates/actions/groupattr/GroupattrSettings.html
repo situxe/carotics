@@ -1,0 +1,221 @@
+<h1>{_wp('Groupped attributes')}</h1>
+<div>
+    <select id="productTypeSelect">
+        {foreach $product_types as $pt}
+            <option value="{$pt.id}">{$pt.name}</option>
+        {/foreach}
+    </select>
+    <button type="button" id="groupattrSaveBtn" class="button green" disabled="disabled">[`Save`]</button>
+</div>
+<div class="block">
+    <div id="productTypeGroups"></div>
+    <div class="block" id="groupattrActions">
+        <button type="button" id="groupattrNewGroupBtn" data-show="groupattrNewGroupForm"><i class="icon16 plus"></i> {_wp('New Group')}</button>
+        <button type="button" id="groupattrCopySettingsBtn" data-show="groupattrCopySettingsForm"><i class="icon16 stack"></i> {_wp('Copy settings')}</button>
+    </div>
+    <div class="block" id="groupattrNewGroupForm" style="display: none">
+        <div class="fields">
+            <div class="field">
+                <div class="name">{_wp('Name')}</div>
+                <div class="value">
+                    <input type="text" id="groupattrNewGroupNameInput" placeholder="{_wp('Group Name')}">
+                    <button type="button" id="groupattrCreateGroupBtn">{_w('Create')}</button>
+                    <button type="button" id="groupattrCancelCreateGroupBtn">{_w('Cancel')}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="groupattrCopySettingsForm" style="display: none">
+        <div class="fields">
+            <div class="field">
+                <div class="name">
+                    {_wp('Product type to copy from')}
+                </div>
+                <div class="value">
+                    <select id="groupattrTypeToCopy"></select>
+                    <button id="groupattrDoCopySettingsBtn" data-action="copy">{_wp('Copy')}</button>
+                    <button id="groupattrCancelCopySettingsBtn" data-action="cancel">{_w('Cancel')}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .groupattrGroups { padding-left: 1em}
+    .groupattrGroups.no-sort { padding-left: 0}
+    .groupattrGroups ul { list-style-type: none;padding: 5px;background-color: #eee}
+    .groupattrGroups ul li { padding: 3px 0}
+    .groupattrGroups > h4 { cursor: move}
+    .groupattrGroups > h4 ul.menu-h { display: inline-block;background-color: transparent}
+    .groupattrGroupControls { padding-left: 1em}
+    .groupattrGroups .icon16.status-gray-tiny { display: none; }
+    .groupattrGroups.invisible .icon16.status-gray-tiny { display: inline-block; }
+    .groupattrGroups .icon16.status-blue-tiny { display: inline-block; }
+    .groupattrGroups.invisible .icon16.status-blue-tiny { display: none; }
+    .groupattrGroups.invisible h4 span.groupname,
+    .groupattrGroups.invisible ul.sortable { opacity: 0.35 }
+</style>
+<script type="text/javascript">
+    var GroupAttr = {
+        showNewGroupForm: function(){
+            GroupAttr.toggleActionButtons('disable');
+            $("#groupattrNewGroupForm").slideDown(300, function(){
+                $("#groupattrNewGroupNameInput").focus();
+            });
+        },
+        hideNewGroupForm: function(){
+            GroupAttr.toggleActionButtons('enable');
+            $("#groupattrNewGroupForm").slideUp(300, function(){
+                $("#groupattrNewGroupNameInput").val('');
+            });
+        },
+        enableSaveButton: function() {
+            $("#groupattrSaveBtn").removeAttr("disabled");
+            return this;
+        },
+        disableSaveButton: function() {
+            $("#groupattrSaveBtn").attr("disabled", "disabled");
+            return this;
+        },
+        toggleActionButtons: function(action) {
+            var $buttons = $('button', '#groupattrActions');
+            action = action || ($buttons.first().is(':disabled') ? 'enable' : 'disable');
+            if(action == 'enable') $buttons.removeAttr('disabled');
+            else $buttons.attr('disabled', 'disabled');
+        },
+        toggleCopySettingsForm: function(action) {
+            var $form = $('#groupattrCopySettingsForm');
+            action = action || ($form.is(':visible') ? 'hide' : 'show');
+            if(action == 'show') {
+                GroupAttr.toggleActionButtons('disable');
+                var $source = $('#groupattrTypeToCopy');
+                var $productTypeSelect =$('#productTypeSelect');
+                $source.empty();
+                $('option', $productTypeSelect).each(function(){
+                    var $this = $(this);
+                    if($this.attr('value') != $productTypeSelect.val())
+                        $source.append($('<option value="'+$this.attr('value')+'">'+$this.text()+'</option>'));
+                });
+                $form.slideDown(300, function(){
+
+                })
+            } else $form.slideUp(300, function(){ GroupAttr.toggleActionButtons('enable'); });
+        }
+    };
+    $(function(){
+        $("#productTypeSelect").change(function () {
+            $.get("?plugin=groupattr&module=settings&action=features", { type_id: $("#productTypeSelect").val() })
+                    .success(function (r) {
+                        var $pgt = $("#productTypeGroups");
+                        $pgt.html(r);
+                        $pgt.sortable({
+                            item: 'div.groupattrGroups',
+                            cancel: '.no-sort',
+                            update: function () {
+                                GroupAttr.enableSaveButton();
+                            }
+                        });
+                        $(".sortable", $pgt).sortable({
+                            connectWith: "ul",
+                            update: function () {
+                                GroupAttr.enableSaveButton();
+                            }
+                        });
+                        GroupAttr.disableSaveButton();
+                    });
+        });
+        $("#productTypeSelect").change();
+        $("#groupattrNewGroupBtn").click(function(){
+            GroupAttr.showNewGroupForm();
+        });
+        $("#groupattrCreateGroupBtn").click(function(){
+            var $pgt = $("#productTypeGroups");
+            $pgt.append(
+                    '<div class="groupattrGroups"><h4><span class="groupname">'+$("#groupattrNewGroupNameInput").val()+'</span>'+
+                    '<a href="#" class="groupattrVisibilityGroupBtn" alt="{_wp('Toggle visibility')}"><i class="icon16 status-blue-tiny"></i><i class="icon16 status-gray-tiny"></i></a>'+
+                    '<ul class="menu-h small float-right">'+
+                    '<li><a href="#" class="groupattrEditGroupBtn"><i class="icon10 edit"></i>{_w("Edit")}</a></li>'+
+                    '<li><a href="#" class="groupattrDeleteGroupBtn"><i class="icon10 delete"></i>{_w("Delete")}</a></li>'+
+                    '</ul></h4><ul class="sortable"></ul></div>');
+            $(".sortable", $pgt).sortable({
+                connectWith: "ul",
+                update: function() {
+                    GroupAttr.enableSaveButton();
+                }
+            });
+            GroupAttr.enableSaveButton().hideNewGroupForm();
+        });
+        $("#groupattrCancelCreateGroupBtn").click(function(){
+            GroupAttr.enableSaveButton().hideNewGroupForm();
+        });
+       $("#groupattrSaveBtn").click(function(){
+           var groups = [];
+           var feats = [];
+           $(".groupattrGroups").each(function(){
+               if(!$(this).hasClass("no-sort")) {
+                   feats = [];
+                   $("input[type='hidden']", this).each(function(){
+                       feats.push($(this).val());
+                   });
+                   groups.push({
+                       name: $("h4", this).children('span').first().text(),
+                       invisible: $(this).hasClass('invisible') ? 1 : 0,
+                       features: feats
+                   });
+               }
+           });
+           $.post("?plugin=groupattr&module=settings&action=savegroups", {
+               type_id: $("#productTypeSelect").val(),
+               groups: groups
+           }).success(function(r){
+               if(r.error) {
+                   
+               } else {
+                   GroupAttr.disableSaveButton();
+               }
+           });
+       });
+
+        $("#productTypeGroups").on('click', "a.groupattrDeleteGroupBtn", function () {
+            if (confirm('{_wp("Delete this group?")}')) {
+                var groups_container = $(this).closest(".groupattrGroups");
+                groups_container.slideUp(400, function () {
+                    $("li", $('ul.sortable',groups_container)).detach().appendTo(".groupattrGroups.no-sort ul");
+                    groups_container.remove();
+                    GroupAttr.enableSaveButton();
+                });
+            }
+            return false;
+        });
+        $("#productTypeGroups").on('click', 'a.groupattrEditGroupBtn', function(){
+            var $name = $(this).closest('h4').children('span').first();
+            var name = prompt('{_wp('New group name')}', $name.text());
+            if(name !== null) {
+                $name.text(name);
+                GroupAttr.enableSaveButton();
+            }
+            return false;
+        });
+        $("#productTypeGroups").on('click', 'a.groupattrVisibilityGroupBtn', function(){
+            $(this).closest('.groupattrGroups').toggleClass('invisible');
+            GroupAttr.enableSaveButton();
+            return false;
+        });
+        $('#groupattrCopySettingsBtn').click(function(){
+            GroupAttr.toggleCopySettingsForm();
+        });
+        $('#groupattrCopySettingsForm').on('click', 'button', function(){
+            if(($(this).data('action') == 'copy') && confirm('{_wp("All settings for this type will be lost! Are you sure?")}')) {
+                $.post("?plugin=groupattr&module=settings&action=copy",{
+                    from: $('select', '#groupattrCopySettingsForm').val(),
+                    to: $("#productTypeSelect").val()
+                }).always(function(){
+                    $("#productTypeSelect").change();
+                })
+            }
+            GroupAttr.toggleCopySettingsForm();
+        });
+
+    });
+</script>

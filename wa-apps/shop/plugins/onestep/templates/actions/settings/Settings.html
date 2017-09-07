@@ -1,0 +1,160 @@
+<style type="text/css">
+    #wa .CodeMirror{
+        border: 1px solid #eee;
+    }
+    .CodeMirror-scroll {
+        height: auto;
+        overflow-y: hidden;
+        overflow-x: auto;
+    }
+    .plugin-menu{
+        float: right;
+        list-style: none;
+    }
+    .plugin-menu li{
+        float: left;
+        margin-left: 10px;
+    }
+    .plugin-menu li a{
+        text-decoration: underline;
+    }
+    ul.setting-links{
+        list-style: none;
+        padding: 0;
+        margin: 7px 0 0 0;
+    }
+    ul.setting-links li{
+        padding-bottom: 5px;
+    }
+    ul.setting-links li a{
+        font-size: 1.03em;
+        font-weight: bold;
+        color: #777;
+    }
+    ul.setting-links li a:hover{
+        color: #000 !important;
+    }
+    .field-group.fixed{
+        width: calc(100% - 253px);
+        position: fixed;
+        background: #fff;
+        z-index: 99;
+        margin: 0;
+        bottom: 0;
+    }
+</style>
+{$settings = $plugin->getSettings()}
+<h1>{$plugin->getName()}</h1>
+
+<ul class="plugin-menu">
+    <li><a href="http://support.wa-plugins.ru/"><i class="icon16 ss pt hammer"></i>Поддержка</a></li>
+</ul>
+
+<div class="fields form">
+    <form action="?module=plugins&id=onestep&action=save" method="post" id="plugins-settings-form">
+        {$wa->csrf()}
+        <div class="field-group">
+            <div class="field">
+                <div class="name">
+                    Оформление заказа
+                </div>
+                <div class="value">
+                    <ul class="setting-links">
+                        <li><a target="_blank" href="?action=settings#/checkout/"><i class="icon16 ss cart-bw"></i>Настройка шагов оформления заказа</a></li>
+                        <li><a target="_blank" href="?action=settings#/shipping/"><i class="icon16 ss shipping-bw"></i>Настройка способов доставки</a></li>
+                        <li><a target="_blank" href="?action=settings#/payment/"><i class="icon16 ss payment-bw"></i>Настройка способов оплаты</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <div class="field">
+                <div class="name">
+                    Статус плагина
+                </div>
+                <div class="value no-shift s-ibutton-checkbox">
+                    <input type="hidden" name="shop_onestep[status]" value="0">
+                    <input type="checkbox" id="ibutton-status" name="shop_onestep[status]" value="1"{if $settings.status|default:0} checked{/if}>
+                </div>
+            </div>
+        </div>
+        <div class="field-group"{if !$settings.status|default:0} style="display:none"{/if}>
+            <div class="field">
+                <div class="name">
+                    Выберите поселение
+                </div>
+                <div class="value">
+                    <select name="route_hash" id="route-selector">
+                        <option value="0">Общие настройки для всех поселений</option>
+                        {foreach $route_hashs as $route_url => $route_hash}
+                            <option value="{$route_hash}"{if $route_hash == $settings.route_hash|default:0} selected="selected"{/if}>{$route_url}</option>
+                        {/foreach}
+                    </select>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="field-group"{if !$settings.status|default:0} style="display:none"{/if}>
+            <div class="route-container block double-padded">
+
+            </div>
+        </div>
+
+        <div class="field-group"{if !$settings.status|default:0} style="display:none"{/if}>
+            <h3 class="grey">Расширьте функционал</h3>
+            <div class="field">
+                <div class="name">
+                    Минимальный заказ
+                </div>
+                <div class="value">
+                    <a target="_blank" href="https://www.webasyst.ru/store/plugin/shop/wholesale/">
+                        <img src="{$plugin->getPluginStaticUrl()}img/wholesale.png" />
+                    </a>
+                    <p class="hint">Воспользуйтесь дополнительным плагином <a target="_blank" href="https://www.webasyst.ru/store/plugin/shop/wholesale/">Минимальный заказ</a>, чтобы задать ограничения на минимальную сумму, минимальное количество товаров в заказе и другие ограничения</p>
+                </div>
+            </div>
+            <div class="field">
+                <div class="name">
+                    Маска для номера телефона 
+                </div>
+                <div class="value">
+                    <a target="_blank" href="https://www.webasyst.ru/store/plugin/shop/phmask/">
+                        <img src="{$plugin->getPluginStaticUrl()}img/phmask.png" />
+                    </a>
+                    <p class="hint">Воспользуйтесь дополнительным плагином <a target="_blank" href="https://www.webasyst.ru/store/plugin/shop/phmask/">Маска для номера телефона</a>, чтобы задать формат для ввода телефонного номера, например с <strong>+7</strong> или <strong>8</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="field-group submit"{if !$settings.status|default:0} style="display:none"{/if}>
+            <div class="field">
+                <div class="value submit">
+                    <input type="submit" class="button green" value="Сохранить">
+                    <span id="plugins-settings-form-status" style="display:none">
+                        <i style="vertical-align:middle" class="icon16 yes"></i> [`Saved`]
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{$tpls = []}
+{foreach $templates as $key => $template}
+    {$mode = $template.tpl_ext}
+    {if $template.tpl_ext == 'js'}
+        {$mode = 'javascript'}
+    {/if}
+    {$tpls[] = ['id' => "sf-template-`$key`", 'mode' => $mode]}
+{/foreach}
+<script type="text/javascript" src="{$wa_app_static_url}plugins/onestep/js/settings.js?{$plugin->getVersion()}"></script>
+<script type="text/javascript">
+    $(function () {
+        $.onestep_settings.init({
+            templates: {json_encode($tpls)}
+        });
+    });
+</script>

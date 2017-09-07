@@ -1,0 +1,97 @@
+{$breadcrumbs = []}
+{if !empty($product)}
+     {$category = $wa->shop->category($product.category_id)}
+{/if}
+{if !empty($category)}
+    {if $category.parent_id}
+        {$parent_category = $wa->shop->category($category.parent_id)}
+        {if $parent_category.parent_id}
+            {$parent_category2 = $wa->shop->category($parent_category.parent_id)}
+            {$breadcrumbs[] = $parent_category2.id}
+        {/if}
+        {$breadcrumbs[] = $parent_category.id}
+    {/if}
+    {$breadcrumbs[] = $category.id}
+{/if}
+{$first_categories = $wa->shop->categories($category_id, null, true)}
+
+    <div class="select-form">
+        <p>Выберите Ваш автомобиль:</p>
+        <select id="first-category" data-placeholder="Выберите марку...">
+            <option value="">Выберите марку...</option>
+            {foreach $first_categories as $first_category}
+                <option data-id="{$first_category.id}" value="{$first_category.url|escape}"{if in_array($first_category.id, $breadcrumbs)} selected{/if}>{$first_category.name}</option>
+            {/foreach}
+        </select>
+        <select id="second-category" data-placeholder="Выберите модель...">
+            <option value="">Выберите модель...</option>
+            {foreach $first_categories as $first_category}
+                {if !empty($first_category.childs)}
+                    {foreach $first_category.childs as $second_category}
+                        <option class="hidden" data-parent-id="{$first_category.id}" data-id="{$second_category.id}" value="{$second_category.url|escape}"{if in_array($second_category.id, $breadcrumbs)} selected{/if}>{$second_category.name}</option>
+                    {/foreach}
+                {/if}
+            {/foreach}
+        </select>
+        
+        <select id="third-category" data-placeholder="Выберите год...">
+            <option value="">Выберите год...</option>
+            {foreach $first_categories as $first_category}
+                {if !empty($first_category.childs)}
+                    {foreach $first_category.childs as $second_category}
+                        {if !empty($second_category.childs)}
+                            {foreach $second_category.childs as $third_category}
+                                <option class="hidden" data-parent-id="{$second_category.id}"  value="{$third_category.url|escape}"{if in_array($third_category.id, $breadcrumbs)} selected{/if}>{$third_category.name}</option>
+                            {/foreach}
+                        {/if}
+                    {/foreach}
+                {/if}
+            {/foreach}
+        </select>
+        <a href="#" class="btn" id="select_from_submit">Перейти</a>
+    </div>
+
+<script type="text/javascript">
+    $(function () {
+        $(document).ready(function () {
+            $('#select_from_submit').click(function(){
+                if($('#third-category').val()) {
+                    window.location.href = $('#third-category').val();
+                } else if($('#second-category').val()) {
+                    window.location.href = $('#second-category').val();
+                } else if($('#first-category').val()) {
+                    window.location.href = $('#first-category').val();
+                }
+                return false; 
+            });
+            $('#first-category,#second-category,#third-category').change(function () {
+                if ($(this).attr('id') == 'first-category') {
+                    $('#second-category option[value!=""]').addClass('hidden');
+                    $('#second-category').val('');
+                    $('#third-category option[value!=""]').addClass('hidden');
+                    $('#third-category').val('');
+                    if ($(this).val()) {
+                        $('#second-category option[data-parent-id=' + $(this).find('option:selected').data('id') + ']').removeClass('hidden');
+                    }
+                } else if ($(this).attr('id') == 'second-category') {
+                    $('#third-category option[value!=""]').addClass('hidden');
+                    $('#third-category').val('');
+                    if ($(this).val()) {
+                        $('#third-category option[data-parent-id=' + $(this).find('option:selected').data('id') + ']').removeClass('hidden');
+                    }
+                } else if ($(this).attr('id') == 'third-category' && $(this).val()) {
+                    window.location.href = $(this).val();
+                }
+                $('#first-category,#second-category,#third-category').trigger('refresh');
+            });
+
+            if ($('#first-category option:selected').length) {
+                $('#second-category option[data-parent-id=' + $('#first-category option:selected').data('id') + ']').removeClass('hidden');
+            }
+            if ($('#second-category option:selected').length) {
+                $('#third-category option[data-parent-id=' + $('#second-category option:selected').data('id') + ']').removeClass('hidden');
+            }
+            $('#first-category,#second-category,#third-category').trigger('refresh');
+        });
+    });
+</script>

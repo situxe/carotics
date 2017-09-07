@@ -1,0 +1,23 @@
+<ul class="menu-v brands">
+    {$categories=$wa->shop->categories(0,1,true)}
+
+    {foreach $categories as $brands2}
+        {foreach $brands2.childs as $b}
+            {$brand_alf[$b.name]=array('fax' => '555-222-9876')
+            'na4me'=>'3333',
+        'url'=>$b.url
+        )}
+        {/foreach}
+    {/foreach}
+
+    {asort($brand_alf)}
+
+
+    {foreach $brand_alf as $b}
+        <li {if $b.name == $wa->param('brand')}class="selected"{/if}>
+            <a href="{$b.url}" title="{$b.name|escape}">{if 0 && $b.image}
+                    <img src="{$wa_url}wa-data/public/shop/brands/{$b.id}/{$b.id}{$b.image}">{else}{$b.name|escape}{/if}
+            </a>
+        </li>
+    {/foreach}
+</ul>

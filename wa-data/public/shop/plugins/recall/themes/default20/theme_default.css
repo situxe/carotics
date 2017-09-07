@@ -1,0 +1,292 @@
+/* Тема оформления "Зеленый стандарт" */
+/* Плагин RECALL */
+/* WA-PRO, 2014 */
+
+/* Контейнер окна запроса */
+#recall_plugin
+{
+	width: 450px;
+	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	-webkit-box-shadow: 0px 1px 5px 0px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow:    0px 1px 5px 0px rgba(50, 50, 50, 0.75);
+	box-shadow:         0px 1px 5px 0px rgba(50, 50, 50, 0.75);
+}
+
+/* Шапка окна запроса */
+#recall_plugin .recall_hat
+{
+	line-height: 30px;
+	height: 30px;
+	background: url('./img/hat.png');
+	color: #ffe;
+	padding-left: 10px;
+	font-size: 1.4em;
+	font-weight: normal;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Кнопка закрытия */
+#recall_plugin .recall_close
+{
+	width: 30px;
+	height: 30px;
+	float: right;
+	background: url('./img/close.png');
+	cursor: pointer;
+}
+
+#recall_plugin .recall_close:hover
+{
+	background: url('./img/close_hover.png');
+}
+
+/* Рабочая область */
+#recall_plugin .recall_body
+{
+	background: white;
+	position: relative;
+	box-sizing: border-box;
+	padding: 15px;
+	padding-top: 10px;
+	padding-bottom: 30px;
+}
+
+/* Картинка в верхней части рабочей области */
+#recall_plugin .recall_header
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: url('./img/header.png');
+	height: 30px;
+	width: 450px;
+}
+
+/* Заголовок рабочей области */
+#recall_plugin .recall_disclaimer
+{
+	font-size: 1.2em;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+/* Информационное поле (описание и значение) */
+#recall_plugin .recall_field
+{
+	clear: both;
+	margin: 0;
+	padding-top: 3px;
+}
+
+/* Описание поля */
+#recall_plugin .recall_name
+{
+	float: left;
+	width: 220px;
+	padding-top: 0.05em;
+	padding-bottom: 10px;
+	font-size: 0.95em;
+	color: #888;
+}
+
+/* Значение поля */
+#recall_plugin .recall_value
+{
+	margin-left: 220px;
+	margin-bottom: 5px;
+	position: relative;
+}
+
+/* Значение поля c кратким описанием вопроса */
+#recall_plugin .recall_value_textarea
+{
+	margin-left: 0px;
+}
+
+/* Значения дополнительных полей */
+/* Тип RANGE */
+#recall_plugin .recall_field_extra_range input
+{
+	width: 93px;
+}
+
+/* Тип CHECKBOX */
+#recall_plugin .recall_field_extra_checkbox .recall_value_checkbox
+{
+	margin-bottom: 3px;
+}
+
+#recall_plugin .recall_field_extra_checkbox .recall_value_checkbox_val
+{
+	display: inline-block;
+	vertical-align: top;
+	margin-top: -2px;
+	margin-left: 5px;
+}
+
+/* Тип SELECT */
+#recall_plugin .recall_field_extra_select select
+{
+	box-sizing: border-box;
+	width: 198px;
+}
+
+/* Стили элементов textarea в форме запроса */
+#recall_plugin .recall_textarea
+{
+	width: 418px;
+	height: 120px;
+	resize: none;
+	border: 1px solid #a9a9a9;
+	box-sizing: border-box;
+}
+
+/* Стили элементов input в форме запроса */
+#recall_plugin .recall_input_text
+{
+	width: 198px;
+	border: 1px solid #a9a9a9;
+	box-sizing: border-box;
+	padding-left: 5px;
+	background: white;
+	height: 20px;
+}
+
+/* Картинка в нижней части рабочей области */
+#recall_plugin .recall_footer
+{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	background: url('./img/footer.png');
+	height: 30px;
+	width: 450px;
+}
+
+/* Кнопка отправки запроса */
+#recall_plugin .recall_submit
+{
+	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 1.1em;
+	background: #fcd630;
+	color: #000;
+	outline: 0;
+	padding: 4px 7px;
+	border: 1px solid rgba(0,0,0,0.3);
+	border-color: rgba(0,0,0,0.2) rgba(0,0,0,0.3) rgba(0,0,0,0.3) rgba(0,0,0,0.3);
+	-webkit-appearance: none;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	border-radius: 3px;
+	text-shadow: 0 1px 0px rgba(255,255,255,0.5);
+	background: #fcd630 -moz-linear-gradient(top, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.0) 100%);
+	background: #fcd630 -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.5)), color-stop(100%,rgba(255,255,255,0.0)));
+	background: #fcd630 -webkit-linear-gradient(top, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+	background: #fcd630 -o-linear-gradient(top, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+	background: #fcd630 -ms-linear-gradient(top, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+	background: #fcd630 linear-gradient(to bottom, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fde992', endColorstr='#fcd630',GradientType=0 );
+}
+
+#recall_plugin .recall_submit:hover
+{
+	cursor: pointer;
+	background: #fcd630 linear-gradient(to bottom, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.3) 100%);
+}
+
+/* Текст ошибки ввода */
+#recall_plugin .recall_error
+{
+	clear: both;
+	text-align: center;
+	margin-bottom: 10px;
+	color: red;
+	font-style: italic;
+}
+
+/* Контейнер сообщения об успешной отправке */
+#recall_plugin .recall_success_container
+{
+	display:none;
+}
+
+/* Сообщение об успешной отправке */
+#recall_plugin .recall_success
+{
+	color: #499756;
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 50px;
+	margin-top: 20px;
+}
+
+/* Ярлык вызова окна */
+.recall_deploy_window
+{
+	width: 30px;
+	height: 150px;
+	position: fixed;
+	top: 100px;
+	right: 0px;
+	cursor: pointer;
+	background: url('./img/label.png');
+	z-index: 9999;
+}
+
+/* Фон затенения страницы */
+.b-modal
+{
+	background-color: #efe !important;
+}
+
+/* Кнопка отправки "Спросить о товаре" */
+.recall_ask_about_the_product
+{
+	background: #fcd630;
+	color: #000;
+	outline: 0;
+	padding: 4px 7px;
+	font-size: 1.1em;
+	border: 1px solid rgba(0,0,0,0.3);
+	border-color: rgba(0,0,0,0.2) rgba(0,0,0,0.3) rgba(0,0,0,0.3) rgba(0,0,0,0.3);
+	-webkit-appearance: none;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	border-radius: 3px;
+	text-shadow: 0 1px 0px rgba(255,255,255,0.5);
+	background: #fcd630 -moz-linear-gradient(top, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.0) 100%);
+	background: #fcd630 -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.5)), color-stop(100%,rgba(255,255,255,0.0)));
+	background: #fcd630 -webkit-linear-gradient(top, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+	background: #fcd630 -o-linear-gradient(top, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+	background: #fcd630 -ms-linear-gradient(top, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+	background: #fcd630 linear-gradient(to bottom, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fde992', endColorstr='#fcd630',GradientType=0 );
+}
+
+.recall_ask_about_the_product:hover
+{
+	cursor: pointer;
+	background: #fcd630 linear-gradient(to bottom, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.3) 100%);
+}
+
+#recall_plugin .wa-captcha-refresh
+{
+	font-size: 13px;
+	color: #a9a9a9;
+}
+
+#recall_plugin .wa-captcha input
+{
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 10px;
+	border: 1px solid #a9a9a9;
+	outline: none;
+}
+
+#recall_plugin .wa-captcha strong
+{
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 10px;
+}

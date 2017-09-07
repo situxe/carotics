@@ -1,0 +1,303 @@
+
+{literal}
+<style>
+	.checkout input.edost { left: 0 !important; position: static !important; top: 0 !important; }
+
+	table.edost td { margin: 0; padding: 0; }
+	div.edost_main, div.edost_office_window, div.edost_main table { font-family: arial; line-height: normal; }
+
+	div.edost_main table, div.edost_office_window table { margin: 0; }
+	div.edost_main table td, div.edost_office_window table.edost_office_head td { border: 0px; padding: 0px; }
+	td.edost_office_head_delimiter { border-color: #ccc !important; border-style: solid !important; border-width: 0 1px 0 0 !important; }
+/*
+	div.edost_office_window_fon { z-index: 1500 !important; }
+	div.edost_office_window { z-index: 1501 !important; }
+*/
+	div.edost_warning { color: #F00; }
+	div.edost_warning_big { font-size: 14px; font-weight: bold; }
+
+	div.edost_main { margin: 0 0 0px 0; }
+	div.edost_description { color: #555; }
+	div.edost_format { padding: 0; }
+	div.edost_format_border { padding: 8px; border: 1px solid #BBB; }
+	div.edost_format_info { padding: 0 0 12px 0; font-size: 13px; }
+	div.edost_format_description { font-size: 12px; padding: 4px 0 0 0; }
+	div.edost_format_head { background: #888; padding: 2px 0 2px 8px; color: #FFF; font-size: 18px; font-weight: bold; }
+	div.edost_format span.edost_insurance { font-size: 14px; }
+	td.edost_format_head { vertical-align: middle; }
+	td.edost_format_ico { vertical-align: top; }
+
+	div.edost_delimiter { border-width: 1px 0 0 0; border-color: #CCC; border-style: solid; }
+	div.edost_delimiter_ms { margin: 5px 0px 5px 24px; }
+	div.edost_delimiter_mb { margin: 15px 0px 15px 24px; }
+
+	label.edost_format_radio { margin-left: 7px; }
+	input.edost_format_radio, label.edost_format_radio { vertical-align: middle; }
+	div.edost_ico { display: inline-block; vertical-align: middle; width: 60px; height: 32px; }
+
+	span.edost_description { color: #555; }
+	span.edost_price_head { font-size: 11px; }
+	span.edost_price_head_color { color: #888; }
+	span.edost_format_tariff { color: #000; font-size: 15px; font-weight: bold; }
+	span.edost_format_name { color: #555; font-size: 14px; font-weight: normal; }
+	span.edost_format_link { cursor: pointer; color: #A00; font-size: 14px; font-weight: bold; }
+	span.edost_format_link_big { cursor: pointer; color: #F00; font-size: 14px; font-weight: bold; }
+	span.edost_format_price { font-size: 14px; }
+	span.edost_format_address_head { color: #888; font-size: 12px; font-weight: normal; }
+	span.edost_format_address { color: #000; font-size: 12px; font-weight: normal; }
+	span.edost_format_company { color: #000; font-size: 12px; font-weight: normal; }
+	span.edost_format_company_head { color: #999; font-size: 12px; font-weight: normal; }
+	span.edost_format_company_name { color: #555; font-size: 12px; font-weight: normal; }
+</style>
+{/literal}
+
+
+{$edost_address = false}
+{if !isset($edost_format)}
+	{$format = false}
+{else}
+	{$format = $edost_format}
+	{$ico_path = $format.ico_path}
+	{$sign = $format.sign}
+	{foreach $format.data as $f_key => $f}{if !empty($f.tariff)}{foreach $f.tariff as $k => $v}{if isset($v.id)}
+		{$format.data.$f_key.tariff.$k.shipping_id = $format.shipping_id}
+		{$format.data.$f_key.tariff.$k.plugin = $format.plugin}
+		{$format.data.$f_key.tariff.$k.currency = 'RUB'}
+		{$format.data.$f_key.tariff.$k.ico = "`$ico_path``$v.ico`.gif"}
+	{/if}{/foreach}{/if}{/foreach}
+	{if $edost_address === false}{$edost_address = $format.address_original}{/if}
+{/if}
+
+{$webasyst_tariff = []}
+
+
+{if !empty($webasyst_tariff)}
+	{if empty($format)}{$format = ['data' => [], 'count' => 0]}{/if}
+	{if empty($format.data.general)}
+		{if !empty($sign.general_head)}{$head = $sign.general_head}{else}{$head = ''}{/if}
+		{$format.data.general = ['head' => $head, 'cod' => '', 'description' => '', 'warning' => '', 'insurance' => '', 'tariff' => []]}
+	{else}
+		{$format.data.general.tariff[] = ['delimiter' => true]}
+	{/if}
+	{$format.count = $format.count + $webasyst_tariff|@count}
+	{foreach $webasyst_tariff as $v}{$format.data.general.tariff[] = $v}{/foreach}
+{/if}
+
+
+<div class="edost_main">
+{if empty($format.data)}
+	<em class="error">[`Oops! We are sorry, but <strong>we can not ship this order to your selected destination</strong>. Checkout can not be completed.`]</em>
+{else}
+
+	{$active = false}
+
+	{if !empty($format.autoselect) || !$active}{$autoselect = true}{else}{$autoselect = false}{/if}
+
+	{if !empty($format.warning)}<div class="edost_warning edost_warning_big">{$format.warning}</div><br>{/if}
+
+	{$border_active = false}
+	{if !empty($format.border)}{$border = $format.border}{else}{$border = false}{/if}
+	{if !empty($format.cod)}{$cod = $format.cod}{else}{$cod = false}{/if}
+	{if $border}{$top = 15}{else}{$top = 40}{/if}
+	{if $format.count == 1}{$hide_radio = true}{else}{$hide_radio = false}{/if}
+
+	{if !empty($format.priceinfo)}
+		{$table_width = 645}
+	{else}
+		{$table_width = 570}
+		{if !empty($format.day)}{$table_width = 620}{/if}
+	{/if}
+
+	{if !empty($format.day)}{$day_width = 80}{else}{$day_width = 10}{/if}
+
+	{$price_width = 85}
+	{$cod_width = 90}
+
+	{$i = 0}
+	{foreach $format.data as $f_key => $f}{if !empty($f['tariff'])}
+		{if $cod && ($f['cod'] || $border)}{$w = $table_width}{else}{$w = $table_width - $cod_width}{/if}
+		<div id="edost_{$f_key}_div" class="{if !$border || $f['head'] == ''}edost_format{else}edost_format_border{$border_active = true}{/if}" style="width: {$w}px; margin: {if $i != 0}{$top}px{else}0{/if} 0 0 0;">
+
+		{$i = $i + 1}
+		{if $f.head != ''}{$head = "<div class=\"edost_format_head\">`$f.head`:</div>"}{else}{$head = ''}{/if}
+
+		{if $cod && $f.cod}
+			<table class="edost" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+			<td>{if $head != ''}{$head}{else}&nbsp;{/if}</td>
+			<td class="edost_format_head" width="{$price_width}" align="right"><span class="edost_price_head edost_price_head_color">{$sign.price_head}</span></td>
+			<td class="edost_format_head" width="{$cod_width}" align="right"><span class="edost_price_head edost_payment">{$sign.cod_head}</span></td>
+			</tr></table>
+			<div style="padding: 8px 0 0 0;"></div>
+		{else}
+			{if $head != ''}
+				{$head}<div style="padding: 8px 0 0 0;"></div>
+				<div style="padding: 3px 0 0 0;"></div>
+			{/if}
+		{/if}
+
+		{if $f['warning'] != ''}<div class="edost_warning edost_format_info">{$f['warning']}</div>{/if}
+		{if $f['description'] != ''}<div class="edost_format_info">{$f['description']}</div>{/if}
+		{if $f['insurance'] != ''}<div class="edost_format_info"><span class="edost_insurance">{$f['insurance']}</span></div>{/if}
+
+		{$i2 = 0}
+		{$count = $f.tariff|@count}
+		{foreach $f.tariff as $k => $v}
+			{$i2 = $i2 + 1}
+			{if $i2 != $count}{$f.tariff.$k.delimiter_small = true}{/if}
+			{if isset($v.delimiter)}
+				{$s = $k - 1}
+				{if isset($f.tariff.$s.format)}{$s = $f.tariff.$s.format}{else}{$s = ''}{/if}
+				{if $s == 'shop' || $s == 'office' || $s == 'terminal'}{$a = true}{else}{$a = false}{/if}
+				{section name=delimiter start=$k loop=$k step=-1}
+					{$k2 = $smarty.section.delimiter.index}
+					{if $a && isset($f.tariff.$k2.format) && $s != $f.tariff.$k2.format}{break}{/if}
+					{$f.tariff.$k2.delimiter_small = false}
+					{if !$a}{break}{/if}
+				{/section}
+			{/if}
+		{/foreach}
+
+		{foreach $f.tariff as $v}
+			{if isset($v.delimiter)}
+				<div class="edost_delimiter edost_delimiter_mb"></div>
+				{continue}
+			{/if}
+
+			{if isset($v.office_map)}{$office_map = $v.office_map}{else}{$office_map = ''}{/if}
+
+			{if !empty($v.to_office)}{$to_office = $v.to_office}{else}{$to_office = ''}{/if}
+
+			{if $office_map != '' && isset($v.office_mode)}{$office_mode = "_`$v.office_mode`"}{else}{$office_mode = ''}{/if}
+
+			{$id = "shipping_`$v.shipping_id`_`$v.id`"}
+			{$value = "`$v.shipping_id`.`$v.id`"}
+			{if $to_office != ''}
+				{$id = "`$id`_`$to_office`"}
+				{$value = "`$value`_`$to_office`"}
+			{/if}
+
+			<div class="shipping{$office_mode}_div" id="{$id}_div" style="{if !empty($v.hide)}display: none;{/if}">
+			{if $office_map == 'get'}{$onclick = "edost_office.window('`$v.office_mode`', true);"}{else}{$onclick = 'edost_SetActive(this.id);'}{/if}
+			{if isset($v.price_long)}{$price_long = $v.price_long}{else}{$price_long = ''}{/if}
+			{if isset($v.office_mode) && $office_map == 'get' && !empty($sign.office_description[$v.office_mode])}{$v.description = $sign.office_description[$v.office_mode]}{/if}
+		<table {if $office_map != '' && isset($v.office_mode)}id="edost_address_{$v.office_mode}"{/if} width="100%" cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td class="edost_format_ico" width="{if $hide_radio}70{else}95{/if}" rowspan="3">
+					{if !empty($v.ico)}
+					<label class="edost_format_radio" for="{$id}"><img class="edost_ico edost_ico_normal" src="{$v.ico}" border="0"></label>
+					{else}
+					<div class="edost_ico"></div>
+					{/if}
+				</td>
+
+				<td class="edost_format_tariff">
+					<label for="{$id}">
+					<span class="edost_format_tariff">{if isset($v.head)}{$v.head}{else}{$v.company}{/if}</span>
+					{if $v.name != '' && !isset($v.company_head)}
+					<span class="edost_format_name"> ({$v.name})</span>
+					{/if}
+
+					{if $v.insurance != ''}
+					<br><span class="edost_insurance">{$v.insurance}</span>
+					{/if}
+					</label>
+
+	
+				</td>
+
+				{if !isset($v.error)}
+
+				{if $price_long === ''}
+				<td width="{$day_width}" align="center">
+					<label for="{$id}"><span class="edost_format_price edost_day">{if !empty($v.day)}{$v.day}{/if}</span></label>
+				</td>
+				{/if}
+
+				<td width="{if $price_long != ''}{$day_width + $price_width}{else}{$price_width}{/if}" align="right">
+					<label for="{$id}">
+					{if isset($v.free)}
+					<span class="edost_format_price edost_price_free" style="{if $price_long == 'light'}opacity: 0.5;{/if}">{$v.free}</span>
+					{else}
+					<span class="edost_format_price edost_price" style="{if $price_long == 'light'}opacity: 0.5;{/if}">{if isset($v.priceinfo_formatted)}{$v.priceinfo_formatted}{elseif isset($v.price_formatted)}{$v.price_formatted}{else}{shop_currency($v.price, $v.currency)}{/if}</span>
+					{/if}
+					</label>
+				</td>
+
+				{if $cod && ($f.cod || $border)}
+				<td width="{$cod_width}" align="right">
+					{if isset($v.pricecod) && $v.pricecod >= 0}
+					<label for="{$id}"><span class="edost_price_head edost_payment">{if isset($v.cod_free)}{$v.cod_free}{else}{$v.pricecod_formatted}{/if}</span></label>
+					{/if}
+				</td>
+				{/if}
+
+				{/if}
+			</tr>
+
+			{if !empty($v.day2)}
+			<tr>
+				<td colspan="5">
+					<span class="edost_format_company_head">[`Estimated delivery`]: </span>
+					<span class="edost_format_price edost_day">{$v.day2}</span>
+				</td>
+			</tr>
+			{/if}
+
+			{if isset($v.company_head)}
+			<tr>
+				<td colspan="5">
+					<span class="edost_format_company_head">{$v.company_head}: </span>
+					<span class="edost_format_company">{$v.company}</span>
+					{if $v.name != ''}<span class="edost_format_company_name"> ({$v.name})</span>{/if}
+				</td>
+			</tr>
+			{/if}
+
+			{if isset($v.office_address)}
+			<tr>
+				<td colspan="5">
+					<span class="edost_format_address_head">{$sign.address}: </span>
+					<span id="{$id}_address_span" class="edost_format_address">{$v.office_address}</span>
+
+					<input autocomplete="off" id="{$id}_address" value="{if isset($v.office_id)}{$v.office_address}|{$v.office_id}|{$v.office_type}|{$v.id}{/if}" type="hidden">
+
+					{if $office_map == 'change'}
+					<br><span class="edost_format_link" onclick="edost_office.window('{$v.office_mode}');">{$v.office_link}</span>
+					{else}
+					<a class="edost_link" href="http://www.edost.ru/office.php?c={$v.office_id}" target="_blank">{$v.office_link}</a>
+					{/if}
+				</td>
+			</tr>
+			{/if}
+
+			{if !empty($v.description) || !empty($v.warning) || !empty($v.error)}
+			<tr>
+				<td colspan="5" width2="100">
+					{if !empty($v.error)}
+					<div class="edost_format_description edost_warning"><b>{$v.error}</b></div>
+					{/if}
+
+					{if !empty($v.warning)}
+					<div class="edost_format_description edost_warning">{$v.warning}</div>
+					{/if}
+
+					{if !empty($v.description)}
+					<div class="edost_format_description edost_description">{$v.description}</div>
+					{/if}
+				</td>
+			</tr>
+			{/if}
+		</table>
+
+		{if !empty($v.delimiter_small)}<div class="edost_delimiter edost_delimiter_ms"></div>{/if}
+
+		</div>
+
+		{/foreach}
+		</div>
+	{/if}{/foreach}
+
+
+
+{/if}
+</div>

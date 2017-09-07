@@ -1,0 +1,265 @@
+AWSTATS DATA FILE 7.0 (build 1.971)
+# If you remove this file, all statistics for date 201701 will be lost/reset.
+# Last config file used to build this data file was /etc/awstats/awstats.ss6-dev.caroptics.ru.conf.
+
+# Position (offset in bytes) in this file for beginning of each section for
+# direct I/O access. If you made changes somewhere in this file, you should
+# also remove completely the MAP section (AWStats will rewrite it at next
+# update).
+BEGIN_MAP 27
+POS_GENERAL 2000                
+POS_TIME 2690                
+POS_VISITOR 3579                
+POS_DAY 3746                
+POS_DOMAIN 4178                
+POS_LOGIN 4412                
+POS_ROBOT 4609                
+POS_WORMS 4741                
+POS_EMAILSENDER 4872                
+POS_EMAILRECEIVER 5015                
+POS_SESSION 5091                
+POS_SIDER 5275                
+POS_FILETYPES 5915                
+POS_DOWNLOADS 6119                
+POS_OS 6167                
+POS_BROWSER 6218                
+POS_SCREENSIZE 6326                
+POS_UNKNOWNREFERER 6400                
+POS_UNKNOWNREFERERBROWSER 6487                
+POS_ORIGIN 6569                
+POS_SEREFERRALS 6710                
+POS_PAGEREFS 6854                
+POS_SEARCHWORDS 7048                
+POS_KEYWORDS 7200                
+POS_MISC 2354                
+POS_ERRORS 7259                
+POS_CLUSTER 4268                
+POS_SIDER_404 7367                
+END_MAP
+
+# LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value
+# FirstTime   = Date of first visit for history file
+# LastTime    = Date of last visit for history file
+# LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped
+# TotalVisits = Number of visits
+# TotalUnique = Number of unique visitors
+# MonthHostsKnown   = Number of hosts known
+# MonthHostsUnKnown = Number of hosts unknown
+BEGIN_GENERAL 8
+LastLine 20170201000034 13012 4008725 20358878579192
+FirstTime 20170109150230
+LastTime 20170131235933
+LastUpdate 20170412120102 13012 0 13011 0 0
+TotalVisits 18                  
+TotalUnique 2                   
+MonthHostsKnown 0                   
+MonthHostsUnknown 2                   
+END_GENERAL
+
+# Misc ID - Pages - Hits - Bandwidth
+BEGIN_MISC 10
+QuickTimeSupport 0 0 0
+JavaEnabled 0 0 0
+JavascriptDisabled 0 0 0
+PDFSupport 0 0 0
+WindowsMediaPlayerSupport 0 0 0
+AddToFavourites 0 4 0
+RealPlayerSupport 0 0 0
+TotalMisc 0 0 0
+DirectorSupport 0 0 0
+FlashSupport 0 0 0
+END_MISC
+
+# Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth
+BEGIN_TIME 24
+0 354 354 37098 3 6 2940
+1 353 353 36995 0 0 0
+2 353 353 36995 0 0 0
+3 352 352 36888 1 2 980
+4 354 354 37098 0 0 0
+5 353 353 36999 0 0 0
+6 352 352 36888 0 0 0
+7 351 351 36713 0 0 0
+8 353 353 36993 0 0 0
+9 366 520 2541832 0 0 0
+10 356 376 642407 0 0 0
+11 353 353 36995 1 2 980
+12 354 366 584890 0 1 0
+13 374 609 6625017 0 2 0
+14 371 448 3312386 1 2 0
+15 451 1097 11579084 7 13 4900
+16 466 1822 24446974 4 7 1470
+17 511 1582 22676413 12 12 39681
+18 416 545 3186518 6 8 3430
+19 413 413 43281 1 2 980
+20 413 413 43285 0 0 0
+21 411 411 43073 0 0 0
+22 413 413 43283 0 0 0
+23 411 411 43071 0 0 0
+END_TIME
+
+# Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]
+# [Start date of last visit] and [Last page of last visit] are saved only if session is not finished
+# The 10 first Hits must be first (order not required for others)
+BEGIN_VISITOR 2
+188.234.244.53 9062 9959 29900189 20170131235933
+195.58.20.17 192 2995 46280987 20170131162434
+END_VISITOR
+
+# Date - Pages - Hits - Bandwidth - Visits
+BEGIN_DAY 11
+20170109 74 1135 19638889 3
+20170110 18 186 5274732 3
+20170111 15 189 3110146 2
+20170124 51 125 2702875 1
+20170125 525 1321 18303204 2
+20170126 1429 1464 2161381 1
+20170127 1413 1554 3838793 1
+20170128 1414 1414 148186 1
+20170129 1415 1415 148293 1
+20170130 1410 1410 147696 1
+20170131 1490 2741 20706981 2
+END_DAY
+
+# Domain - Pages - Hits - Bandwidth
+# The 10 first Pages must be first (order not required for others)
+BEGIN_DOMAIN 1
+ip 9254 12954 76181176
+END_DOMAIN
+
+# Cluster ID - Pages - Hits - Bandwidth
+BEGIN_CLUSTER 0
+END_CLUSTER
+
+# Login - Pages - Hits - Bandwidth - Last visit
+# The 10 first Pages must be first (order not required for others)
+BEGIN_LOGIN 1
+1admin 9254 12849 75451420 20170131235933
+END_LOGIN
+
+# Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt
+# The 10 first Hits must be first (order not required for others)
+BEGIN_ROBOT 0
+END_ROBOT
+
+# Worm ID - Hits - Bandwidth - Last visit
+# The 5 first Hits must be first (order not required for others)
+BEGIN_WORMS 0
+END_WORMS
+
+# EMail - Hits - Bandwidth - Last visit
+# The 20 first Hits must be first (order not required for others)
+BEGIN_EMAILSENDER 0
+END_EMAILSENDER
+
+# EMail - Hits - Bandwidth - Last visit
+# The 20 first hits must be first (order not required for others)
+BEGIN_EMAILRECEIVER 0
+END_EMAILRECEIVER
+
+# Session range - Number of visits
+BEGIN_SESSION 5
+1h+ 7
+15mn-30mn 1
+2mn-5mn 1
+0s-30s 3
+30mn-1h 6
+END_SESSION
+
+# URL - Pages - Bandwidth - Entry - Exit
+# The 10 first Pages must be first (order not required for others)
+BEGIN_SIDER 13
+/webasyst/ 8883 1002477 6 7
+/edost/ 111 3322517 0 9
+/product/5675-fara_levaya_toyota_avensis_t250_212-11f3l-ld-em/ 99 47181397 10 0
+/youcitySearch/ 64 313393 0 0
+/webasyst/shop/ 53 3762597 0 0
+/wa-content/font/ruble/arial/alsrubl-arial-bold.woff 14 25088 0 1
+/checkout/ 6 2921560 0 0
+/cart/ 6 2736574 0 1
+/ 5 2362137 2 0
+/checkout/shipping/ 5 95322 0 0
+/youcityGet/ 3 408 0 0
+/product/5676-fara_pravaya_toyota_avensis_t250_212-11f3r-ld-em/ 2 935802 0 0
+/wa-content/font/ruble/arial/alsrubl-arial-regular.woff 3 5364 0 0
+END_SIDER
+
+# Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression
+BEGIN_FILETYPES 7
+css 771 3201797 0 0
+png 461 1226536 0 0
+html 9237 64634184 0 0
+jpg 545 1915077 0 0
+js 1392 4927469 0 0
+woff 17 30452 0 0
+gif 531 245661 0 0
+END_FILETYPES
+
+# Downloads - Hits - Bandwidth
+BEGIN_DOWNLOADS 0
+END_DOWNLOADS
+
+# OS ID - Hits
+BEGIN_OS 1
+winnt 12954
+END_OS
+
+# Browser ID - Hits
+BEGIN_BROWSER 3
+firefox50.0 1793
+chrome55.0.2883.87 9959
+firefox51.0 1202
+END_BROWSER
+
+# Screen size - Hits
+BEGIN_SCREENSIZE 0
+END_SCREENSIZE
+
+# Unknown referer OS - Last visit date
+BEGIN_UNKNOWNREFERER 0
+END_UNKNOWNREFERER
+
+# Unknown referer Browser - Last visit date
+BEGIN_UNKNOWNREFERERBROWSER 0
+END_UNKNOWNREFERERBROWSER
+
+# Origin - Pages - Hits 
+BEGIN_ORIGIN 6
+From0 20 20
+From1 0 0
+From2 0 0
+From3 75 75
+From4 9159 12859
+From5 0 0
+END_ORIGIN
+
+# Search engine referers ID - Pages - Hits
+BEGIN_SEREFERRALS 0
+END_SEREFERRALS
+
+# External page referers - Pages - Hits
+# The 10 first Pages must be first (order not required for others)
+BEGIN_PAGEREFS 1
+http://wa-plugins.ru/webasyst/helpdesk/ 75 75
+END_PAGEREFS
+
+# Search keyphrases - Number of search
+# The 10 first number of search must be first (order not required for others)
+BEGIN_SEARCHWORDS 0
+END_SEARCHWORDS
+
+# Search keywords - Number of search
+# The 10 first number of search must be first (order not required for others)
+BEGIN_KEYWORDS 0
+END_KEYWORDS
+
+# Errors - Hits - Bandwidth
+BEGIN_ERRORS 3
+401 28 13720
+302 8 0
+500 7 39681
+END_ERRORS
+
+# URL with 404 errors - Hits - Last URL referer
+BEGIN_SIDER_404 0
+END_SIDER_404

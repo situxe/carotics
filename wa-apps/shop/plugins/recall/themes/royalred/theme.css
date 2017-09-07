@@ -1,0 +1,276 @@
+/* Тема оформления "Королевский красный" */
+/* Плагин RECALL */
+/* WA-PRO, 2014 */
+
+/* Контейнер окна запроса */
+#recall_plugin
+{
+	width: 450px;
+	-webkit-box-shadow: 0px 1px 5px 0px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow:    0px 1px 5px 0px rgba(50, 50, 50, 0.75);
+	box-shadow:         0px 1px 5px 0px rgba(50, 50, 50, 0.75);
+}
+
+/* Шапка окна запроса */
+#recall_plugin .recall_hat
+{
+	line-height: 30px;
+	height: 30px;
+	background: url('./img/hat.png');
+	color: #ffe;
+	padding-left: 10px;
+	font-size: 1.4em;
+	font-weight: normal;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Кнопка закрытия */
+#recall_plugin .recall_close
+{
+	width: 30px;
+	height: 30px;
+	float: right;
+	background: url('./img/close.png');
+	cursor: pointer;
+}
+
+#recall_plugin .recall_close:hover
+{
+	background: url('./img/close_hover.png');
+}
+
+/* Рабочая область */
+#recall_plugin .recall_body
+{
+	background: white;
+	position: relative;
+	box-sizing: border-box;
+	padding: 15px;
+	padding-top: 10px;
+	padding-bottom: 30px;
+}
+
+/* Картинка в верхней части рабочей области */
+#recall_plugin .recall_header
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: url('./img/header.png');
+	height: 30px;
+	width: 450px;
+}
+
+/* Заголовок рабочей области */
+#recall_plugin .recall_disclaimer
+{
+	font-size: 1.2em;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+/* Информационное поле (описание и значение) */
+#recall_plugin .recall_field
+{
+	clear: both;
+	margin: 0;
+	padding-top: 3px;
+}
+
+/* Описание поля */
+#recall_plugin .recall_name
+{
+	float: left;
+	width: 220px;
+	padding-top: 0.05em;
+	padding-bottom: 10px;
+	font-size: 0.95em;
+	color: #888;
+}
+
+/* Значение поля */
+#recall_plugin .recall_value
+{
+	margin-left: 220px;
+	margin-bottom: 5px;
+	position: relative;
+}
+
+/* Значение поля c кратким описанием вопроса */
+#recall_plugin .recall_value_textarea
+{
+	margin-left: 0px;
+}
+
+/* Значения дополнительных полей */
+/* Тип RANGE */
+#recall_plugin .recall_field_extra_range input
+{
+	width: 93px;
+}
+
+/* Тип CHECKBOX */
+#recall_plugin .recall_field_extra_checkbox .recall_value_checkbox
+{
+	margin-bottom: 3px;
+}
+
+#recall_plugin .recall_field_extra_checkbox .recall_value_checkbox_val
+{
+	display: inline-block;
+	vertical-align: top;
+	margin-top: -2px;
+	margin-left: 5px;
+}
+
+/* Тип SELECT */
+#recall_plugin .recall_field_extra_select select
+{
+	box-sizing: border-box;
+	width: 198px;
+	border: 1px solid #c34c53;
+	outline: none;
+}
+
+/* Стили элементов textarea в форме запроса */
+#recall_plugin .recall_textarea
+{
+	width: 418px;
+	height: 120px;
+	resize: none;
+	border: 1px solid #c34c53;
+	box-sizing: border-box;
+	outline: none;
+}
+
+/* Стили элементов input в форме запроса */
+#recall_plugin .recall_input_text
+{
+	width: 198px;
+	border: 1px solid #c34c53;
+	box-sizing: border-box;
+	padding-left: 5px;
+	background: white;
+	height: 20px;
+	outline: none;
+}
+
+/* Картинка в нижней части рабочей области */
+#recall_plugin .recall_footer
+{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	background: url('./img/footer.png');
+	height: 30px;
+	width: 450px;
+}
+
+/* Кнопка отправки запроса */
+#recall_plugin .recall_submit
+{
+	width: 300px;
+	display: block;
+	margin: 0 auto;
+	height: 30px;
+	line-height: 30px;
+	padding: 0px;
+	border-radius: 3px;
+	color: white;
+	border: 1px solid #a0a0a0;
+	background: url('./img/send.png');
+}
+
+#recall_plugin .recall_submit:hover
+{
+	background: url('./img/send_hover.png');
+}
+
+/* Текст ошибки ввода */
+#recall_plugin .recall_error
+{
+	clear: both;
+	text-align: center;
+	margin-bottom: 10px;
+	color: red;
+	font-style: italic;
+}
+
+/* Контейнер сообщения об успешной отправке */
+#recall_plugin .recall_success_container
+{
+	display:none;
+}
+
+/* Сообщение об успешной отправке */
+#recall_plugin .recall_success
+{
+	color: #499756;
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 50px;
+	margin-top: 20px;
+}
+
+/* Ярлык вызова окна */
+.recall_deploy_window
+{
+	width: 30px;
+	height: 200px;
+	position: fixed;
+	top: 100px;
+	right: 0px;
+	cursor: pointer;
+	background: url('./img/label.png');
+	z-index: 9999;
+}
+
+/* Фон затенения страницы */
+.b-modal
+{
+	background-color: #fff !important;
+}
+
+/* Кнопка отправки "Спросить о товаре" */
+.recall_ask_about_the_product
+{
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	padding: 0px 10px;
+	border-radius: 3px;
+	color: white;
+	border: 1px solid #a0a0a0;
+	background: url('./img/send.png');
+	text-align: center;
+}
+
+.recall_ask_about_the_product:hover
+{
+	cursor: pointer;
+	background: url('./img/send_hover.png');
+}
+
+#recall_plugin .wa-captcha-refresh
+{
+	font-size: 13px;
+	color: #c34c53;
+}
+
+#recall_plugin .wa-captcha input
+{
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 10px;
+	border: 1px solid #c34c53;
+	outline: none;
+}
+
+#recall_plugin .wa-captcha strong
+{
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 10px;
+}

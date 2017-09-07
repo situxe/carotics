@@ -1,0 +1,18 @@
+
+<!-- plugin hook: 'frontend_search' -->
+{* @event frontend_search.%plugin_id% *}
+{foreach $frontend_search as $_}{$_}{/foreach}
+
+{if empty($products)}
+    [`No products were found.`]
+{else}
+    <div class="content-pop-products">
+        <div class="entry-title">
+            <h1 class="category-name">
+                Поиск по запросу "{$title}"
+            </h1>
+        </div>
+        {include file="list-thumbs.html"}
+    </div>
+{/if}
+

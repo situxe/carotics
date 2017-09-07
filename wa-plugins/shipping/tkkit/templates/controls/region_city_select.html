@@ -1,0 +1,9 @@
+<div class="block padding" style="padding-left: 0">
+    <select name="{$namespace|escape}[region]" class="select">
+        {html_options options=$regions selected=$params.value.region}
+    </select>
+    <br>
+    <input type="text" class="input" name="{$namespace|escape}[city]" value="{$params.value.city}">
+    <br>
+    <span class="hint">{$params.description}</span>
+</div>

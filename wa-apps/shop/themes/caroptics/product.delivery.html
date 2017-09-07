@@ -1,0 +1,131 @@
+<div class="delivers drop">
+    <div class="entry-title">
+        <h3 data-target="#id3" class="accord">Доставка {$product.name} в <span class="cityName"></span></h3>
+        <a href="#" class="show-all desc" onclick="$('#city_select_link').click();return false;">Выбрать другой город</a>
+    </div>
+
+    {shopEdostPlugin::display()}
+    {*<div class="delivers-table acc-target" id="id3">
+        <div class="head">
+            <p class="box1">Перевозчики</p>
+            <p class="box2">Срок</p>
+            <p class="box3">До пункта выдачи,<i class="fa fa-rub" aria-hidden="true"></i></p>
+            <p class="box4">До дома, <i class="fa fa-rub" aria-hidden="true"></i></p>
+        </div>
+        <div class="table-body">
+            <div class="table-row">
+                <p class="box1">
+                    <a class="green-href border_bottom_dashed" href="#" data-fancybox="modal" data-src="#modal-sdek">
+                        <img src="{$wa_theme_url}img/deliver1.png" alt="">
+                        Транспортная компания СДЭК
+                    </a>
+                </p>
+                <p class="box0 mobile">
+                    <img src="{$wa_theme_url}img/deliver1.png" alt="">
+                </p>
+                <p class="box2">27 мая</p>
+                <p class="box3">230</p>
+                <p class="box4">600</p>
+            </div>
+            <div class="table-row">
+                <p class="box1">
+                    <a class="green-href border_bottom_dashed" href="#" data-fancybox="modal" data-src="#modal-sdek">
+                        <img src="{$wa_theme_url}img/deliver2.png" alt="">
+                        Почта России (после оплаты)
+                    </a>
+                </p>
+                <p class="box0 mobile">
+                    <img src="{$wa_theme_url}img/deliver2.png" alt="">
+                </p>
+                <p class="box2">-</p>
+                <p class="box3 unknown">Недоступно</p>
+                <p class="box4 unknown">Недоступно</p>
+            </div>
+            <div class="table-row">
+                <p class="box1">
+                    <a class="green-href border_bottom_dashed" href="#" data-fancybox="modal" data-src="#modal-sdek">
+                        <img src="{$wa_theme_url}img/deliver2.png" alt="">
+                        Почта России (с наложенным платежом)
+                    </a>
+                </p>
+                <p class="box0 mobile">
+                    <img src="{$wa_theme_url}img/deliver2.png" alt="">
+                </p>
+                <p class="box2">-</p>
+                <p class="box3 unknown">Недоступно</p>
+                <p class="box4 unknown">Недоступно</p>
+            </div>
+            <div class="table-row">
+                <p class="box1">
+                    <a class="green-href border_bottom_dashed" href="#" data-fancybox="modal" data-src="#modal-sdek">
+                        <img src="{$wa_theme_url}img/deliver3.png" alt="">
+                        Транспортная компания «КИТ»
+                    </a>
+                </p>
+                <p class="box0 mobile">
+                    <img src="{$wa_theme_url}img/deliver3.png" alt="">
+                </p>
+                <p class="box2">28 мая</p>
+                <p class="box3">300</p>
+                <p class="box4">600 / 1000</p>
+            </div>
+            <div class="table-row">
+                <p class="box1">
+                    <a class="green-href border_bottom_dashed" href="#" data-fancybox="modal" data-src="#modal-sdek">
+                        <img src="{$wa_theme_url}img/deliver1.png" alt="">
+                        Транспортная компания
+                    </a>
+                </p>
+                <p class="box0 mobile">
+                    <img src="{$wa_theme_url}img/deliver1.png" alt="">
+                </p>
+                <p class="box2">27 мая</p>
+                <p class="box3">230</p>
+                <p class="box4">600</p>
+            </div>
+            <div class="table-row">
+                <p class="box1">
+                    <a class="green-href border_bottom_dashed" href="#" data-fancybox="modal" data-src="#modal-sdek">
+                        <img src="{$wa_theme_url}img/deliver2.png" alt="">
+                        Почта России (после оплаты)
+                    </a>
+                </p>
+                <p class="box0 mobile">
+                    <img src="{$wa_theme_url}img/deliver2.png" alt="">
+                </p>
+                <p class="box2">-</p>
+                <p class="box3 unknown">Недоступно</p>
+                <p class="box4 unknown">Недоступно</p>
+            </div>
+        </div>
+    </div>
+    <div id="modal-sdek" style="display: none;padding: 0px 29px;max-width: 800px;padding-bottom: 20px;">
+        <div class="out company-info in collapse" style="height: auto;">
+            <h1 style="text-align: center;" class="toggle-header">
+                Курьерская служба доставки СДЭК в Москве: экспресс-доставка грузов по России и за рубеж<span class="caret acc-caret"></span></h1>
+            <p>
+                <strong>Служба доставки СДЭК</strong> с 2000 года занимается организацией перевозки грузов, деловой корреспонденции, товаров разных категорий, габаритов, ценности по Москве, России и миру. Цари, императоры во все времена были озадачены вопросом строительства дорог от Златоглавой к Восточным землям, на Север-Юг. Курьерская служба в Москве еще в стародавние времена была невероятно востребована, на нее была возложена миссия - помогать в решении стратегических задач по организации
+                торговых, дипломатических связей между московским и мировым деловым бомондом.</p>
+            <p>
+                <strong>Экспресс-доставка СДЭК</strong> делает свою историю, используя всю совокупность транспортных магистралей, данных предшественниками. Если раньше, чтобы ускорить отправку, нужно было купить конверт с надписью "АВИА", сегодня срочная доставка грузов по России, миру производится на других скоростях, почтовый конверт не поможет. Транспортный парк, задействованный в доставке, не содержит если только коней и собачьих упряжек, хотя, если подумать, иногда целесообразно и это.</p>
+            <p>
+                На территории в 2,5 тыс. км<sup>2</sup> живут, общаются друг с другом более 15 млн. человек. Курьерская доставка по Москве – одна из услуг СДЭК, которая рассчитывается по особому тарифу, и исполняется в считанные минуты.</p>
+            <p>
+                По первому требованию организуем:</p>
+            <ul>
+                <li>
+                    доставку грузов по России: доставка отправлений частных лиц, работа с корпоративными клиентами. У вас свой интернет-магазин - тогда вы особенно заинтересованы в надежном партнере. Клиент заказал сапоги, значит он хочет их видеть уже завтра. Срочность - то, что необходимо вам, что можем обеспечить мы.
+                </li>
+                <li>
+                    Курьерские услуги начинаются с телефонного звонка. На этом ваша миссия заканчивается: сами приедем, оформим, отправим и передадим.
+                </li>
+                <li>
+                    Доставка грузов во все страны СНГ, мира: международная срочная, экономная, - решает клиент.
+                </li>
+            </ul>
+            <p>
+                Богатая сетка тарифов, несколько способов связи, оплаты, льготы постоянным заказчикам, доставка самых ценных грузов, важность которых не поддается оценке - экспресс-доставка СДЭК показывает, что такое масштабы, скорость. Личный кабинет - удобный инструмент сотрудничества с компанией: владейте, интересуйтесь новостями, звоните. Курьеры готовы отправиться в путь в любую минуту.</p>
+            <span class="long-shadow"></span>
+        </div>
+    </div>*}
+</div>

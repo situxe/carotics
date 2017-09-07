@@ -1,0 +1,296 @@
+.rc_settings_wrapper
+{
+	width: 800px;
+}
+
+.rc_right
+{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+
+.rc_status_name
+{
+	width: 140px !important; 
+	min-width: 140px !important;
+}
+
+.rc_status_color
+{
+	width: 40px !important; 
+	min-width: 40px !important;
+}
+
+.rc_status_td
+{
+	width: 40px;
+	display: block;
+	line-height: 16px;
+}
+
+.rc_theme_cover
+{
+	width: 430px;
+	height: 200px;
+	border: 1px solid #868686;
+	margin-top: 7px;
+	margin-bottom: 10px;
+}
+
+.rc_theme_menu
+{
+	list-style: none;
+	background: #f7f7f7;
+	padding-left: 0px;
+	border: 1px solid #cccccc;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	margin-bottom: 0px;
+	position: relative;
+}
+
+.rc_theme_menu li
+{
+	line-height: 30px;
+	display: inline-block;
+	padding: 0px 10px;
+	cursor: pointer;
+	color: #03c;
+}
+
+.rc_theme_menu li:hover
+{
+	color: red;
+}
+
+.rc_selected
+{
+	background: #e7e7e7;
+	color: black !important;
+}
+
+.rc_theme_content
+{
+	border: 1px solid #cccccc;
+	padding: 10px;
+}
+
+.rc_hint_info
+{
+	margin-bottom: 9px;
+	font-weight: bold;
+}
+
+.rc_button
+{
+	line-height: 25px;
+	border: 3px solid #66cc33;
+	border-radius: 3px;
+	text-align: center;
+	cursor: pointer;
+	background: url('../img/button.png');
+	font-weight: bold;
+	width: 100%;
+	height: 31px;
+	box-sizing: border-box;
+}
+
+.rc_css_button
+{
+	margin-top: 10px;
+}
+
+.rc_button_yellow
+{
+	border: 3px solid #fdda3b !important;
+}
+
+.rc_button_red
+{
+	border: 3px solid #ff472e !important;
+}
+
+.rc_button:active
+{
+	background: url('../img/button_active.png');
+}
+
+.CodeMirror
+{
+	border: 1px solid #ccc;
+	padding: 2px;
+}
+
+.rc_image_container
+{
+	margin-bottom: 10px;
+	padding: 5px;
+	border: 1px solid #6e6e83;
+	border-radius: 3px;
+}
+
+.rc_image_caption
+{
+	margin-bottom: 10px;
+}
+
+.rc_image_preview
+{
+	margin-bottom: 5px;
+}
+
+.rc_saving
+{
+	display: none;
+	line-height: 16px;
+	font-style: italic;
+	margin-top: 10px;
+	margin-left: 5px;
+}
+
+.rc_saving_preloader
+{
+	background: url('../img/preloader.gif');
+	height: 16px;
+	width: 16px;
+	float: left;
+	margin-right: 10px;
+}
+
+.rc_route_sitename
+{
+	font-weight: bold;
+	margin-bottom: 10px;
+	padding-left: 5px;
+	font-size: 18px;
+}
+
+.rc_table
+{
+	margin-bottom: 15px !important;
+}
+
+.rc_hidden_css
+{
+	display: none;
+}
+
+.rc_theme_about_item
+{
+	margin-bottom: 10px;
+	clear: left;
+}
+
+.rc_theme_about_name
+{
+	width: 150px;
+	float: left;
+	color: gray;
+	font-weight: bold;
+}
+
+.rc_theme_about_value
+{
+	margin-left: 150px;
+	line-height: 20px;
+}
+
+.rc_settings_radio
+{
+	display: inline-block;
+	margin-top: 3px;
+}
+
+.rc_settings_radio_label
+{
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 5px;
+}
+
+.rc_status_adding
+{
+	display: none;
+	background: url('../img/preloader.gif') no-repeat;
+	height: 16px;
+	padding-left: 25px;
+	margin-right: 10px;
+	line-height: 16px;
+	font-style: italic;
+	float: right;
+}
+
+.rc_icon
+{
+	cursor: pointer;
+	height: 16px;
+	width: 16px;
+	display: inline-block;
+	text-indent: -9999px;
+}
+
+.rc_save
+{
+	background: url('../img/save.png');
+	margin-left: 12px !important;
+}
+
+.rc_save_inactive
+{
+	background: url('../img/save_inactive.png') !important;
+	cursor: default !important;
+}
+
+.rc_status_delconfirm
+{
+	display: none;
+	padding: 10px;
+	border: 1px solid #868686;
+	border-radius: 5px;
+	margin-top: 10px;
+}
+
+.rc_removestatus_newstatus
+{
+	display: block;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.rc_button_delstatus
+{
+	margin-bottom: 10px;
+}
+
+.rc_fields_table
+{
+	line-height: 20px;
+}
+
+.rc_field_internalval
+{
+	margin-bottom: 5px;
+}
+
+.rc_field_addmore
+{
+	display: block;
+	margin-bottom: 5px !important;
+}
+
+.rc_field_internalval_del
+{
+	display: inline-block !important;
+	vertical-align: top !important;
+	margin-top: 2px !important;
+	margin-left: 5px !important;
+}
+.rc_inner_sort
+{
+	margin-top: 2px !important;
+}

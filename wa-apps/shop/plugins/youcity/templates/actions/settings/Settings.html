@@ -1,0 +1,137 @@
+<link href="/wa-apps/shop/plugins/youcity/css/youcity.backend.css?{$smarty.now|date_format:'%H%M%S'}" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="/wa-apps/shop/plugins/youcity/js/youcity.backend.js?{$smarty.now|date_format:'%H%M%S'}"></script>
+<h1>Определение местоположения</h1>
+<div class="fields form">
+    <form action="?plugin=youcity&module=settings&action=save" method="post"  id="plugins-settings-form">
+        <p>{literal}{shopYoucityPlugin::getViewCity()}{/literal} - Код хелпера вывода</p>
+        <p class="gray"><i class="icon16 exclamation"></i>Используя этот код Вы можете осуществить вывод "Определение местоположения" в любом месте вашей темы оформления.</p>
+        <div class="field" style="">
+            <div class="name">
+                Статус
+            </div>
+            <div class="value">
+                <select name="settings[status]">
+                    <option {if $settings.status == 1} selected="selected"{/if} value="1">Включен</option>
+                    <option {if $settings.status == 0} selected="selected"{/if} value="0">Выключен</option>
+                </select>
+            </div>
+        </div> 
+        
+        <br /><br />
+        
+    <div class="field">
+        <div class="name">
+            Всплывающий блок при первом входе клиента
+        </div>
+        <div class="value">
+        <br />
+            <ul class="menu-h">
+                <li><span class="" id="s-toggle-backend-validation-disabled-label">Включить</span></li>
+                <li>
+                   <input  id="recent_shop_recent_count" type="checkbox" {if $settings.windows==1}checked{/if} name="settings[windows]" value="1"> 
+                </li>
+                <li><span id="s-toggle-backend-validation-enabled-label" class="gray">Отключить</span></li>
+            </ul>
+        </div>
+    </div>
+    
+    <br /><br />
+   <div class="field">
+        <div class="name">
+            Шаблон вывода ссылки на витрине магазина<br>
+            <span class="hint">HTML</span>
+       </div>
+       
+        <div class="value">
+            <b>Код вывода ссылки </b><br/><br/>
+            <div id="s-editor-core-wrapper">
+                <textarea id="sf-template"  class="body" name="template">{$template}</textarea>
+            </div>
+        </div>
+        {if $change_tpl}
+        <div class="value">
+            <p style="padding-left: 20px;"><span class="hint"><i style="left: 0;" class="icon16 exclamation"></i>Внимание! Шаблон по умолчанию был изменен</span><br />
+            <input type="checkbox" name="reset_tpls" id="reset_tpls" value="1"  /> - Сбросить изменения, использовать шаблон по умолчанию
+            </p>
+        </div>
+        {/if}
+    </div>
+
+<br /><br />
+
+<div class="field">
+    <div class="name">Город по умолчанию</div>
+    <div class="value">
+        <div class="auto-city" style="margin-top: 0;">
+            <div class="hint">Если город не определился автоматически</div><br />
+            <div class="auto-city-input default_city">
+            <input type="text" autocomplete="off" name="settings[default_city]" title="Введите название города" placeholder="Введите название города" value="{$settings.default_city}" />
+            <input type="hidden" name="settings[default_region]" value="{$settings.default_region}" /> 
+            <input type="hidden" name="settings[default_country]" value="{$settings.default_country}" />  
+                <ul id="find_city" style="display: none;">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br /><br />
+
+<div class="field">
+    <div class="name">Настройка отображение плагина</div>
+    <div class="value">
+            <ul class="country-changer">
+                <li class="rus active" data-youcity="rus"><a><i></i>Россия </a> </li>
+                <li class="ukr" data-youcity="ukr"><a><i></i>Украина</a></li>
+                <li class="kaz" data-youcity="kaz"><a><i></i>Казахстан </a></li>
+                <li class="blr" data-youcity="blr"><a><i></i>Белоруссия </a></li>
+            </ul>
+            <div class="city-changer">
+              {foreach from=$info key=k item=v}  
+                <div class="city_list" data-youcitylist="{$k}">
+                <ul class="menu-h">
+                    <li><span class="" id="s-toggle-backend-validation-disabled-label">Отключен</span></li>
+                    <li>
+                        <input type="checkbox" data-country="rus" class="status_country" name="settings[{$k}]" {if $settings[$k] == 1}checked="checked"{/if}>
+                    </li>
+                    <li><span id="s-toggle-backend-validation-enabled-label" class="gray">Включен</span></li>
+                </ul>
+                <hr />
+                    <ul class="zebra">
+                    {foreach from=$v key=key item=value}
+                        <li ><a href="" >{$value}</a><a href="#" data-id="{$key}" class="city-del"><i class="icon16 delete"></i></a></li>
+                    {/foreach}
+                    </ul>
+                    <div class="auto-city">
+                        <h6>Добавить город</h6>
+                        <div class="auto-city-input">
+                        <input type="text" autocomplete="off" name="youcity" data-country="{$k}" title="Введите название города" placeholder="Введите название города" />
+                            <ul id="find_city" style="display: none;">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+              {/foreach}  
+        </div>
+    </div>
+</div>
+
+
+ 
+    
+    
+    
+    
+    <br /><br />
+    <div class="field">
+        <div class="value submit">
+            <input type="submit" class="button green" value="Сохранить">
+           <!-- <input type="hidden" name="url" value="{$settings.quickUrl}" /> -->
+            <span id="plugins-settings-form-status" style="display:none">
+                <i style="vertical-align:middle" class="icon16 yes"></i> [`Saved`]
+            </span>
+        </div>
+    </div>
+    </form>
+    
+</div>

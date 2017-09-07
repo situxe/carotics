@@ -1,0 +1,80 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: shop/plugins/groupattr\n"
+"POT-Creation-Date: 2014-05-19 17:41+0400\n"
+"PO-Revision-Date: \n"
+"Last-Translator:  shop/plugins/groupattr\n"
+"Language-Team:  shop/plugins/groupattr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: en_US\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrSettings.html:8
+msgid "Save"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrSettings.html:138
+msgid "Delete this group?"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrSettings.html:1
+msgid "Groupped attributes"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrSettings.html:14
+msgid "New Group"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrSettings.html:18
+msgid "Name"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/lib/actions/shopGroupattrPluginSettings.actions.php:97
+msgid "Error:"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/lib/config/plugin.php:4
+msgid "Groups of Attributes"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/lib/config/plugin.php:5
+msgid "Combine the product attributes in the groups to show them to customers"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrSettings.html:20
+msgid "Group Name"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrFeatures.html:8
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrSettings.html:136
+msgid "Toggle visibility"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrSettings.html:209
+msgid "All settings for this type will be lost! Are you sure?"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrSettings.html:14
+msgid "Copy settings"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrSettings.html:32
+msgid "Product type to copy from"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrSettings.html:36
+msgid "Copy"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/templates/actions/groupattr/GroupattrSettings.html:193
+msgid "New group name"
+msgstr ""
+
+#: /wa-apps/shop/plugins/groupattr/lib/actions/shopGroupattrPluginSettings.actions.php:126
+msgid "Incorrect product type ID"
+msgstr ""

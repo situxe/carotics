@@ -1,0 +1,42 @@
+
+
+    <div class="content-text">
+        <div class="entry-title">
+            {include file="soc-widget.html"}
+            <h1 class="h3">{$category.name}</h1>
+        </div>
+
+        {$category.description}
+
+    </div>
+    <div class="content-modifications">
+        <div class="entry-title">
+            <h2 class="h3">Выберите модификацию {$category.name}</h2>
+        </div>
+        <div class="modifications-wrapper">
+            <ul class="modifications">
+                {foreach $category.subcategories as $sc}
+                    <li>
+                        <a href="{$sc.url}">{$sc.name}</a>
+                    </li>
+                {/foreach}
+                {*
+                <li><a href="#">Toyota Camry V30 (2001 - 2006)</a>
+                <div class="after">Для данной модификации нет фар.
+                <a href="#" class="green-href">Посмотреть все запчасти</a>
+                </div>
+                </li>
+                *}
+            </ul>
+        </div>
+    </div>
+    {include file="working.html"}
+
+    {if !empty($products)}
+        <div class="content-pop-products">
+            <div class="entry-title">
+                <h3>Популярные запчасти для автомобилей {$category.name}</h3>
+            </div>
+            {include file="list-thumbs.html"}
+        </div>
+    {/if}

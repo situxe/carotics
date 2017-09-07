@@ -1,0 +1,184 @@
+<div class="cart-block">
+    <form id="cart-form{if $wa->get('cart')}-dialog{/if}" method="post" action="{$wa->getUrl('/frontendCart/add')}">
+        <div class="cart-block-top">
+            {if $product.compare_price}
+                <p class="old-price">{shop_currency_html($product.compare_price)}</p>
+            {/if}
+            {*if !empty($product.rating) && $product.rating > 0*}
+            <div class="reviews-short">
+                <a href="#" class="open_review" data-scroll=".reactions">{$reviews_total_count} отзывов</a>
+                <div class="rating">
+                    {for $foo=1 to 5}
+                        {if $foo<=$product.rating}
+                            <span></span>
+                        {elseif $foo>$product.rating && $foo+1<$product.rating}
+                            <span class="floor"></span>
+                        {else}
+                            <span class="empty"></span>
+                        {/if}
+                    {/for}
+                </div>
+            </div>
+            {*/if*}
+        </div>
+        {if $product.sku_type}
+
+            <!-- SELECTABLE FEATURES selling mode -->
+            {$default_sku_features = $product.sku_features}
+            {$product_available = $product.status}
+
+            {if $theme_settings.selectable_features_control == 'inline'}
+                <div class="options">
+                    {foreach $features_selectable as $f}
+                        <div class="inline-select{if $f.type == 'color'} color{/if}">
+                            {foreach $f.values as $v_id => $v}
+                                {if !isset($default_sku_features[$f.id])}{$default_sku_features[$f.id]=$v_id}{/if}
+                                <a data-value="{$v_id}" href="#"{if $v_id == ifset($default_sku_features[$f.id])} class="selected"{/if}{if $f.type == 'color'} style="{$v->style}; margin-bottom: 20px;"{/if}>
+                                    {if $f.type == 'color'}&nbsp;<i class="icon16 checkmark color_checkmark"></i>{/if}
+                                    {if $f.type == 'color'}&nbsp;<span class="color_name">{strip_tags($v)}</span>{else}{$v}{/if}
+                                </a>
+                            {/foreach}
+                            <input type="hidden" data-feature-id="{$f.id}" class="sku-feature" name="features[{$f.id}]" value="{ifset($default_sku_features[$f.id])}">
+                        </div>
+                    {/foreach}
+                </div>
+            {else}
+                <div class="options">
+                    {foreach $features_selectable as $f}
+                        {$f.name}:
+                        <select data-feature-id="{$f.id}" class="sku-feature" name="features[{$f.id}]">
+                            {foreach $f.values as $v_id => $v}
+                                <option value="{$v_id}" {if $v_id == ifset($default_sku_features[$f.id])}selected{/if}>{$v}</option>
+                            {/foreach}
+                        </select>
+                        <br>
+                    {/foreach}
+                </div>
+            {/if}
+
+            <!-- list all SKUs for Schema.org markup -->
+            {foreach $product.skus as $sku}
+                <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    {$sku_available =  $product.status && $sku.available && ($wa->shop->settings('ignore_stock_count') || $sku.count === null || $sku.count > 0)}
+                    {if $sku.name}
+                        <meta itemprop="name" content="{$sku.name|escape}">{/if}
+                    <meta itemprop="price" content="{$sku.price}">
+                    <meta itemprop="priceCurrency" content="{$product.currency}">
+                    {if (!($sku.count === null) && $sku.count <= 0)}
+                        <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                    {else}
+                        <link itemprop="availability" href="http://schema.org/InStock" />
+                    {/if}
+                </div>
+            {/foreach}
+
+        {else}
+
+            <!-- FLAT SKU LIST selling mode -->
+            {$product_available = false}
+            {if count($product.skus) > 1}
+
+                {* SKU radio buttons *}
+                <ul class="skus">
+                    {foreach $product.skus as $sku}
+                        {$sku_available =  $product.status && $sku.available && ($wa->shop->settings('ignore_stock_count') || $sku.count === null || $sku.count > 0)}
+                        <li itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                            <label{if !$sku.available} class="disabled"{/if}>
+                                <input name="sku_id" type="radio" value="{$sku.id}"{if !$sku.available} disabled="true" {/if}{if !$sku_available}data-disabled="1"{/if}{if $sku.id == $product.sku_id} checked="checked"{/if} data-compare-price="{shop_currency($sku.compare_price, $product.currency, null, 0)}" data-price="{shop_currency($sku.price, $product.currency, null, 0)}"{if $sku.image_id} data-image-id="{$sku.image_id}"{/if}> <span itemprop="name">{$sku.name|escape}</span>
+                                {if $sku.sku}<span class="hint">{$sku.sku|escape}</span>{/if}
+                                <meta itemprop="price" content="{$sku.price}">
+                                <meta itemprop="priceCurrency" content="{$product.currency}">
+                                <span class="price tiny nowrap">{shop_currency_html($sku.price, $product.currency)}</span>
+                                {if (!($sku.count === null) && $sku.count <= 0)}
+                                    <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                                {else}
+                                    <link itemprop="availability" href="http://schema.org/InStock" />
+                                {/if}
+                            </label>
+                        </li>
+                        {$product_available = $product_available or $sku_available}
+                    {/foreach}
+                </ul>
+            {else}
+
+                {* in case there is only one SKU, don't display the selector *}
+                <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    {$sku = $product.skus[$product.sku_id]}
+                    {if $sku.name}
+                        <meta itemprop="name" content="{$sku.name|escape}">{/if}
+                    <meta itemprop="price" content="{$sku.price}">
+                    <meta itemprop="priceCurrency" content="{$product.currency}">
+                    {if !$sku.available}
+                        <link itemprop="availability" href="http://schema.org/Discontinued" />
+                        <p><em class="bold error">[`This product is not available for purchase`]</em></p>
+                    {elseif !$wa->shop->settings('ignore_stock_count') && !($sku.count === null || $sku.count > 0)}
+                        <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                        <div class="stocks"><strong class="stock-none"><i class="icon16 stock-transparent"></i>{if $wa->shop->settings('ignore_stock_count')}[`Pre-order only`]{else}[`Out of stock`]{/if}</strong></div>
+                    {else}
+                        <link itemprop="availability" href="http://schema.org/InStock" />
+                    {/if}
+                    <input name="sku_id" type="hidden" value="{$product.sku_id}">
+                    {$product_available = $product.status && $sku.available && ($wa->shop->settings('ignore_stock_count') || $sku.count === null || $sku.count > 0)}
+                </div>
+            {/if}
+
+        {/if}
+        <div class="purchase">
+            {if $services}
+                <!-- services -->
+                <div class="services">
+                    {foreach $services as $s}
+                        <div class="service-{$s.id}">
+                            <label>
+                                <input data-price="{shop_currency($s.price, $s.currency, null, 0)}" {if !$product_available}disabled="disabled"{/if} type="checkbox" name="services[]" value="{$s.id}"> {$s.name|escape} {if $s.price && !isset($s.variants)}(+<span class="service-price">{shop_currency_html($s.price, $s.currency)}</span>){/if}
+                            </label>
+                            {if isset($s.variants)}
+                                <select data-variant-id="{$s.variant_id}" class="service-variants" name="service_variant[{$s.id}]" disabled>
+                                    {foreach $s.variants as $v}
+                                        <option {if $s.variant_id == $v.id}selected{/if} data-price="{shop_currency($v.price, $s.currency, null, 0)}" value="{$v.id}">{$v.name|escape} (+{shop_currency($v.price, $s.currency)})</option>
+                                    {/foreach}
+                                </select>
+                            {else}
+                                <input type="hidden" name="service_variant[{$s.id}]" value="{$s.variant_id}">
+                            {/if}
+                        </div>
+                    {/foreach}
+                </div>
+            {/if}
+            <p class="current">{shop_currency_html($product.price)}</p>
+            {if $product.edit_datetime}
+                <p class="upd"><b>Обновлено:</b> {$product.edit_datetime|wa_date:'humandatetime'}</p>
+            {/if}
+            <input type="hidden" name="product_id" value="{$product.id}">
+            <button class="btn green-btn" type="submit" {if !$product_available}disabled="disabled"{/if}>В корзину</button>
+            {if ceil($product.total_sales/$product.price)>2}
+                <p class="selled">Товар заказали: <span>{ceil($product.total_sales/$product.price)} раз</span></p>
+            {/if}
+
+            {$sku = $product.skus[$product.sku_id]}
+            {if !$wa->shop->settings('ignore_stock_count') && ($sku.count === null || $sku.count > 0) && $sku.available}
+                <div class="in_stock">[`In stock`]</div>
+            {/if}
+            <p class="delivery"><a href="#" class="green-href border_bottom_dashed" onclick="$('#city_select_link').click();return false;">Выбрать другой город</a> <span>в <span class="cityName"></span></span></p>
+            <p class="delivery-place">ТК СДЭК – 385<i class="fa fa-rub" aria-hidden="true"></i></p>
+            <span class="delivery-variants" data-scroll=".delivers">Все способы доставки <span>в <span class="cityName"></span></span></span>
+        </div>
+    </form>
+</div>
+<script>
+    (function ($) {
+        $.getScript("{$wa_theme_url}product.js?v{$wa_theme_version}", function () {
+            if (typeof Product === "function") {
+                new Product('#cart-form{if $wa->get('cart')}-dialog{/if}', {
+                    currency: {json_encode($currency_info)}
+                    {if count($product.skus) > 1 or $product.sku_type}
+                    , services: {json_encode($sku_services)}
+                    {/if}
+                    {if $product.sku_type}
+                    , features: {json_encode($sku_features_selectable)}
+                    {/if}
+                });
+            }
+        });
+    })(jQuery);
+</script>

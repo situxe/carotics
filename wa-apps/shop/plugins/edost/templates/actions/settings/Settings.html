@@ -1,0 +1,99 @@
+<style type="text/css">
+    .plugin-menu{
+        float: right;
+        list-style: none;
+    }
+    .plugin-menu li{
+        float: left;
+        margin-left: 10px;
+    }
+    .plugin-menu li a{
+        text-decoration: underline;
+    }
+    div.geshifilter {
+        background-color: #f8f8f8;
+        border: 1px solid #ccc;
+        color: #222;
+        display: block;
+        line-height: 1.3;
+        margin: 0.5em;
+        overflow: auto;
+        padding: 0.5em;
+    }
+</style>
+<h1>Edost</h1>
+
+<ul class="plugin-menu">
+    <li><a href="mailto:support@wa-plugins.ru">Поддержка разработчика плагина</a></li>
+    <li><a target="_blank" href="http://wa-plugins.ru/">WA-PLUGINS.ru - сайт разработчика</a></li>
+</ul>
+
+
+<div class="fields form">
+    <form action="?module=plugins&id=edost&action=save" method="post" id="plugins-settings-form">
+        {$wa->csrf()}
+
+        <div class="field-group">
+            <div class="field">
+                <div class="name">
+                    Статус плагина
+                </div>
+                <div class="value no-shift s-ibutton-checkbox">
+                    <input type="hidden" name="shop_edost[status]" value="0">
+                    <input type="checkbox" id="ibutton-status" name="shop_edost[status]" value="1"{if $settings.status} checked{/if}>
+                </div>
+            </div>
+        </div>
+
+        <div class="field-group"{if !$settings.status} style="display:none"{/if}>
+            <div class="field">
+                <div class="name">
+                    Вывод плагина
+                </div>
+                <div class="value">
+                    <select name="shop_edost[frontend_product_output]">
+                        <option {if $settings.frontend_product_output|default:'block' == '0'} selected{/if} value="0">Не выводить</option>
+                        <option {if $settings.frontend_product_output|default:'block' == 'menu'} selected{/if} value="menu">Содержимое, добавляемое рядом со ссылками на дополнительные страницы товара (frontend_product.menu)</option>
+                        <option {if $settings.frontend_product_output|default:'block' == 'cart'} selected{/if} value="cart">Содержимое, добавляемое рядом с кнопкой «В корзину» (frontend_product.cart)</option>
+                        <option {if $settings.frontend_product_output|default:'block' == 'block_aux'} selected{/if} value="block_aux">Блок дополнительной информации в боковой части страницы (frontend_product.block_aux)</option>
+                        <option {if $settings.frontend_product_output|default:'block' == 'block'} selected{/if} value="block">Блок дополнительной информации в основной части описания товара (frontend_product.block)</option>
+                    </select>
+                    <p class="hint">
+                        Для вывода используется хук темы дизайна <strong>frontend_product</strong><br/>
+                        <strong>{ldelim}shopEdostPlugin::display(){rdelim}</strong> - хелпер вывода плагина в произвольном месте
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="field"{if !$settings.status} style="display:none"{/if}>
+            <div class="value submit">
+                <input type="submit" class="button green" value="Сохранить">
+                <span id="plugins-settings-form-status" style="display:none">
+                    <i style="vertical-align:middle" class="icon16 yes"></i> [`Saved`]
+                </span>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#ibutton-status').iButton({
+            labelOn: "", labelOff: "", className: 'mini'
+        }).change(function () {
+            var self = $(this);
+            var enabled = self.is(':checked');
+            if (enabled) {
+                self.closest('.field-group').siblings().show(200);
+            } else {
+                self.closest('.field-group').siblings().hide(200);
+            }
+            var f = $("#plugins-settings-form");
+            $.post(f.attr('action'), f.serialize());
+        });
+        $('.ibutton').iButton({
+            labelOn: "", labelOff: "", className: 'mini'
+        });
+
+    });
+</script>

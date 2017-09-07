@@ -1,0 +1,9 @@
+.seofilter-link:link,
+.seofilter-link:visited,
+.seofilter-link:hover,
+.seofilter-link:active {
+	color: inherit;
+	font: inherit;
+	text-decoration: inherit;
+	cursor: inherit;
+}

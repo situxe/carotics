@@ -1,0 +1,21 @@
+
+{foreach $feature_groups as $fg}
+    <div class="groupattrGroups{if $fg@index == 0} no-sort{elseif isset($fg.invisible) && $fg.invisible} invisible{/if}">
+        {if $fg@index > 0}
+            {*<h4><span>{$fg.name}</span><span class="groupattrGroupControls"><a href="#" class="groupattrDeleteGroupBtn"><i class="icon10 delete"></i></a>&nbsp;<a href="#" class="groupattrEditGroupBtn"><i class="icon10 edit"></i></a></span></h4>*}
+            <h4>
+                <span class="groupname">{$fg.name}</span>
+                <a href="#" class="groupattrVisibilityGroupBtn" alt="{_wp('Toggle visibility')}"><i class="icon16 status-blue-tiny"></i><i class="icon16 status-gray-tiny"></i></a>
+                <ul class="menu-h small float-right">
+                    <li><a href="#" class="groupattrEditGroupBtn"><i class="icon10 edit"></i>{_w('Edit')}</a></li>
+                    <li><a href="#" class="groupattrDeleteGroupBtn"><i class="icon10 delete"></i>{_w('Delete')}</a></li>
+                </ul>
+            </h4>
+        {/if}
+        <ul class="sortable">
+            {foreach $fg.features as $fk=>$fn}
+                <li><i class="icon16 sort"></i>{$fn.name}<input type="hidden" value="{$fn.code}"></li>
+            {/foreach}
+        </ul>
+    </div>
+{/foreach}

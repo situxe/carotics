@@ -1,0 +1,29 @@
+<div class="edost-plugin"></div>
+<script type="text/javascript">
+    $(function () {
+        var loading = $('<span><i class="icon16 loading"></i> Загрузка...</span>');
+        $('.edost-plugin').html(loading);
+
+        function load() {
+            $.ajax({
+                url: '{$wa->getUrl('shop/frontend/edost')}',
+                type: 'get',
+                data:{
+                    sku_id: $('input[name=sku_id]').val()
+                },
+                success: function (response) {
+                    $('.edost-plugin').html(response);
+                }
+            });
+        }
+        load();
+
+        var city = $('#city_select_link').html();
+        setInterval(function () {
+            if (city != $('#city_select_link').html()) {
+                city = $('#city_select_link').html();
+                load();
+            }
+        }, 500);
+    });
+</script>

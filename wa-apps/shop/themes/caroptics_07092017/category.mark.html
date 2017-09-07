@@ -1,0 +1,42 @@
+<div class="content-text">
+    <div class="entry-title">
+        {include file="soc-widget.html"}
+        <h1 class="h3">{$category.name}</h1>
+    </div>
+    {$category.description}
+</div>
+{if $category.subcategories}
+    <div class="content-models">
+        <div class="entry-title">
+            <h2 class="h3">Выберите модель {$category.name}</h2>
+        </div>
+        <div class="models-wrapper">
+            <ul class="models">
+                {foreach $category.subcategories as $sc}
+                    {$subsubcategories = $wa->shop->categories($sc.id)}
+                    {if $subsubcategories}
+                        <li class="dropdown">
+                            <a role="button" class='drop-sum closed'>{$sc.name}</a>
+                            <div class="drop-menu">
+                                <ul>
+                                    {foreach $subsubcategories as $subsubcategory}
+                                        <li>
+                                            <a href="{$subsubcategory.url}">{$subsubcategory.name}</a>
+                                        </li>
+                                    {/foreach}
+                                </ul>
+                            </div>
+                        </li>
+                    {/if}
+                {/foreach}
+            </ul>
+        </div>
+    </div>
+{/if}
+{include file="working.html"}
+<div class="content-pop-products">
+    <div class="entry-title">
+        <h3>Популярные запчасти для автомобилей {$category.name}</h3>
+    </div>
+    {include file="list-thumbs.html"}
+</div>

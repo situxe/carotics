@@ -1,0 +1,32 @@
+<ul class="breadcrumb">
+    <li>
+        <a href="{$wa_url}">Главная</a>
+    </li>
+    {if $breadcrumbs}
+        {foreach $breadcrumbs as $breadcrumb}
+            {if $breadcrumb.url == '/catalog/optika/'}
+                {$breadcrumb.name='Каталог'}
+            {/if}
+            <li>
+                <a href="{$breadcrumb.url}">{$breadcrumb.name}</a>
+            </li>
+            {if $product && $breadcrumb@last}
+                {$catalog_parent_url=$breadcrumb.url}
+            {/if}
+        {/foreach}
+    {/if}
+
+    {if $category}
+        {if $category.id == 558}
+            {$category.name='Каталог'}
+        {/if}
+        <li class="active">{$category.name}</li>
+    {/if}
+    {if $product}
+        <li class="active">{$product.name}</li>
+        {if $catalog_parent_url}<a href="{$catalog_parent_url}" class="back">« вернуться к каталогу</a>{/if}
+    {/if}
+    {if $page}
+        <li class="active">{$page.name}</li>
+    {/if}
+</ul>

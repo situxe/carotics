@@ -1,0 +1,37 @@
+{$product_ids = array_keys($products)}
+{$products_skus = $wa->shop->skus($product_ids)}
+{$features = $wa->shop->features($products)}
+{foreach $products as $p}
+    {$skus = $products_skus[$p.id]}
+    {$sku = $skus[0]}
+    <div class="block-item">
+        <div class="block">
+            <div class="img">
+                <a href="{$p.frontend_url}">
+                    {$wa->shop->productImgHtml($p, $img_size, ['class' => 'img-responsive', 'alt' => $p.name, 'title' => $p.name])}
+                </a>
+            </div>
+            <div class="title">
+                <p>{$sku.sku}</p>
+            </div>
+            {$p_category = $wa->shop->category($p.category_id)}
+            {$p_category_url = $wa->shop->categoryUrl($p_category)}
+            <div class="info">
+                <p class="for"><a href="{$p_category_url}">{$p_category.name}</a></p>
+                <p class="type"><a href="{$p.frontend_url}">{$p.name}</a></p>
+                <p class="descr">{$p.summary|strip_tags}</p>
+            </div>                        
+            <div class="years"><p>{$p.features['period_vypuska']|default:''}</p></div>
+            <div class="controls">
+                <p class="price">{shop_currency_html($p.price)}</p>
+                <form class="addtocart" {if $p.sku_count > 1}data-url="{$p.frontend_url}{if strpos($p.frontend_url, '?')}&{else}?{/if}cart=1"{/if} method="post" action="{$wa->getUrl('/frontendCart/add')}">
+                    <input type="hidden" name="product_id" value="{$p.id}">
+                    <button class="btn green-btn">В корзину</button>
+                </form>
+                <div class="delivery">
+                    <p>Самовывоз: <span>завтра, 15 марта</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{/foreach}

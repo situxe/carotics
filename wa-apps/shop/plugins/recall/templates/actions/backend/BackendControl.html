@@ -1,0 +1,531 @@
+<link rel="stylesheet" type="text/css" href="{$wa_app_static_url}plugins/recall/css/control.css">
+
+<div class="sidebar left250px rc_sidebar">
+	<div class="block">
+        <ul class="menu-v with-icons">
+            <li class="rc_cath rc_all_requests selected">
+                <span class="count">{$rc_total_requests}</span>
+                <a>
+                    <i class="icon16 phone"></i>Все запросы
+                </a>
+            </li>
+            <li class="rc_cath rc_new_requests">
+                <span class="count">{$rc_new_requests}</span>
+                <a>
+                    <i class="icon16 lightning"></i>Новые запросы
+                </a>
+            </li>
+		</ul>
+	</div>
+	<div class="block">
+        <h5 class="heading">Статусы запросов</h5>
+		<div class="hierarchical s-collection-list">
+			<ul class="menu-v with-icons rc_status_list">
+				<li class="dr rc_request_status_li" data-itemid="off">
+					<span class="counters">
+						<span class="count" data-itemid="off">{$rc_no_status}</span>
+					</span>
+					<a>
+						<i class="icon16 folder"></i>
+						<span class="name rc_request_status_name" data-itemid="{$rc_status.id}">Без статуса</span>
+					</a>
+				</li>
+				{foreach $rc_status_list as $rc_status}
+					<li class="dr rc_request_status_li" data-itemid="{$rc_status.id}">
+						<span class="counters">
+							<span class="count" data-itemid="{$rc_status.id}">{$rc_status.request_count}</span>
+						</span>
+						<a>
+							<i class="icon16 folder"></i>
+							<span class="name rc_request_status_name" data-itemid="{$rc_status.id}" style="color: {$rc_status.color};">{$rc_status.name|escape}</span>
+						</a>
+					</li>
+				{/foreach}
+			</ul>
+		</div>
+	</div>
+	<div class="block">
+		<h5 class="heading">Поиск запросов</h5>
+		<br>
+		<input type="text" class="rc_search_query">
+		<input type="button" class="rc_search_button" value="Искать">
+		<span class="hint">Поиск ведется по имени пользователя, имени продукта, контактным данным, содержимому запроса (например, <b>Иван, костюм или +7 (950) 000-00-00</b>) и дате подачи (например, <b>2014-10-20</b>)</span><br>
+	</div>
+</div>
+<div class="content left250px blank rc_list_main" id="s-content">
+<div class="content">
+    <div class="block double-padded">
+		<span class="hint">Чтобы открыть запрос, нажмите на его номер в таблице. Чтобы изменить статус запроса, "потяните" за номер запроса и перетащите его в папку статуса слева.</span>
+        <br>
+		<h1 class="rc_h1"><span class="rc_list_title">Все запросы</span></h1>
+		<span class="rc_loading_data"><span class="rc_preloader"></span>Загрузка..</span>
+		<table class="zebra rc_request_table">
+			<tr class="header"><th>ID</th><th>Пользователь</th><th>Телефон</th><th>Email</th><th>Продукт</th><th>Статус</th><th>Дата подачи</th></tr>
+		</table>
+		<div class="rc_request_table_footer">
+			Показано <span class="rc_requests_shown"></span> из <span class="rc_requests_total"></span>
+			<span class="rc_link_style rc_loadmore">Загрузить еще</span>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="content left250px blank rc_request_main" id="s-content">
+<div class="content">
+    <div class="block double-padded">
+		<a href="#/" class="back">← Назад</a>
+        <h1 class="rc_h1">
+			<span class="rc_request_title">
+				Запрос №
+				<span class="drag_helper rc_open_status" style="display: none;" data-refresh-history=true></span>
+				<span class="rc_request_num"></span>
+				<input type="button" value="Отметить непрочитанным" class="rc_set_unread" data-itemid="0">
+			</span>
+		</h1>
+		<br>
+		<span class="hint">Для смены статуса запроса перетащите заголовок в папку статуса</span>
+		<br>
+		<br>
+		<br>
+		<h2>Общие сведения</h2>
+		<table class="zebra rc_request_data">
+			<tr class="header"><th class="rc_w200">Параметр</th><th>Значение</th></tr>
+			<tr>
+				<td>Пользователь</td>
+				<td class="rc_request_data_user"></td>
+			</tr>
+			<tr>
+				<td>Телефон</td>
+				<td class="rc_request_data_phone"></td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td class="rc_request_data_email"></td>
+			</tr>
+			<tr>
+				<td>Продукт</td>
+				<td class="rc_request_data_product"></td>
+			</tr>
+			<tr>
+				<td>Статус</td>
+				<td class="rc_request_data_status"></td>
+			</tr>
+			<tr>
+				<td>Дата подачи</td>
+				<td class="rc_request_data_deployed"></td>
+			</tr>
+			<tr>
+				<td>Url, откуда сделан запрос</td>
+				<td class="rc_request_data_url"></td>
+			</tr>
+			<tr>
+				<td>IP, откуда сделан запрос</td>
+				<td class="rc_request_data_ip"></td>
+			</tr>
+			<tr>
+				<td>Ссылка на этот запрос</td>
+				<td class="rc_request_link"></td>
+			</tr>
+			<tr>
+				<td>Удалить этот запрос</td>
+				<td class="rc_request_remove"></td>
+			</tr>
+			<tr>
+				<td>Комментарий пользователя</td>
+				<td class="rc_request_data_comment">
+					<textarea class="rc_request_data_comment_textarea" readonly=true>
+					</textarea>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<h2>Дополнительные поля</h2>
+		<table class="zebra rc_extra_fields">
+			<tr class="header"><th>Имя поля</th><th>Значение</th></tr>
+		</table>
+		<hr>
+		<h2>Другие запросы этого пользователя</h2>
+		<table class="zebra rc_other_requests">
+			<tr class="header"><th>ID</th><th>Дата подачи</th><th>Продукт</th><th>Статус</th><th class="rc_other_txa_container">Сообщение</th></tr>
+		</table>
+		<div class="rc_request_table_footer">
+			Показано <span class="rc_requests_shown_other"></span> из <span class="rc_requests_total_other"></span>
+			<span class="rc_link_style rc_loadmore_other">Загрузить еще</span>
+		</div>
+		<hr>
+		<h2>История выполнения запроса</h2>
+		<table class="zebra rc_request_history">
+			<tr class="header"><th>Пользователь</th><th>Комментарий</th><th>Дата</th></tr>
+		</table>
+		<hr>
+		<h2>Добавить комментарий к запросу</h2>
+		<textarea class="rc_history_comment"></textarea>
+		<input type="button" class="rc_history_comment_add" value="Добавить комментарий">
+	</div>
+</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$(".rc_history_comment_add").click(function() {
+		var request = $(".rc_request_title").find(".rc_open_status").attr("data-itemid");
+		$.post('?plugin=recall&module=backend&action=addcomment', 'request='+request+'&comment='+encodeURI($(".rc_history_comment").val()), function(JData) {
+			loadHistory(request);
+			$(".rc_history_comment").val("");
+		}, "json");
+	});
+	
+	$(".rc_open_status").live('click', function() {
+		openRequest($(this).attr("data-itemid"));
+	});
+	
+	function escapeHtml(text) 
+	{
+		var map = {
+			'&': '&amp;',
+			'<': '&lt;',
+			'>': '&gt;',
+			'"': '&quot;',
+			"'": '&#039;'
+		};
+		return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+	}
+	
+	function openRequest(request)
+	{
+		$.post('?plugin=recall&module=backend&action=loadrequest', 'request='+request, function(JData) {
+			if(JData.data.result == 'error') { alert(JData.data.error); return; }
+			
+			$(".rc_request_title").find(".drag_helper").attr("data-itemid", JData.data.request.id).html(JData.data.request.id);
+			
+			$(".rc_new_requests").find(".count").html(JData.data.new_requests);
+			$(".rc_open_status[data-itemid="+JData.data.request.id+"]").find(".rc_request_new").remove();
+			
+			// SET UNREAD
+			if(JData.data.request.is_new == 1)
+			{
+				$(".rc_set_unread").attr("data-itemid", JData.data.request.id);
+				$(".rc_set_unread").show();
+			}
+			else { $(".rc_set_unread").hide(); }
+			
+			// REQ NUM
+			$(".rc_request_num").html(JData.data.request.id);
+			
+			// USER
+			var user_name = JData.data.request.referrer_name;
+			if(JData.data.request.contact_id) { user_name += '<br>От имени аккаунта:<a href="?action=customers#/id/'+JData.data.request.contact_id+'" target="blank">'+JData.data.request.contact_name+'</a>'; }
+			$(".rc_request_data_user").html(user_name);
+			
+			// PHONE
+			var user_phone = "Нет данных";
+			if(JData.data.request.referrer_phone) { user_phone = JData.data.request.referrer_phone; }
+			$(".rc_request_data_phone").html(user_phone);
+			
+			// Email
+			var user_email = "Нет данных";
+			if(JData.data.request.referrer_email) { user_email = '<a href="mailto:'+JData.data.request.referrer_email+'">'+JData.data.request.referrer_email+'</a>'; }
+			$(".rc_request_data_email").html(user_email);
+			
+			// Product
+			var product_name = "Не относится";
+			if(JData.data.request.product_id) { product_name = '<a href="?action=products#/product/'+JData.data.request.product_id+'/" target="blank">'+JData.data.request.product_name+'</a>'; }
+			$(".rc_request_data_product").html(product_name);
+			
+			// Status
+			var status_name = "Без статуса";
+			if(JData.data.request.status_code) { status_name = JData.data.request.status_name; }
+			else { JData.data.request.status_code='off'; }
+			$(".rc_request_data_status").html('<span class="rc_link_style rc_trigger_status" data-itemid="'+JData.data.request.status_code+'">'+status_name+'</span>');
+			
+			// Request link
+			$(".rc_request_link").html(JData.data.backend_url);
+			
+			// STATIC FIELDS
+			$(".rc_request_data_deployed").html(JData.data.request.deploy_time);
+			$(".rc_request_data_url").html('<a href="'+JData.data.request.url+'" target="blank">'+JData.data.request.url+'</a>')
+			$(".rc_request_data_ip").html(JData.data.request.user_ip+'<a class="ml" href="http://ipgeobase.ru/?address='+JData.data.request.user_ip+'" target="blank">Геоданные</a>'+'<a class="ml" href="https://www.nic.ru/whois/?query='+JData.data.request.user_ip+'" target="blank">WHOIS</a>');
+			$(".rc_request_data_comment_textarea").html(JData.data.request.request_text);
+			$(".rc_request_remove").html('<span class="rc_link_style rc_remove_request" data-itemid="'+JData.data.request.id+'">Удалить безвозвратно</span>');
+			
+			if(JData.data.request.contact_id) {
+				$(".rc_loadmore_other").attr("data-userid", JData.data.request.contact_id);
+			}
+			else {
+				$(".rc_loadmore_other").attr("data-userid", 'null');
+			}
+			$(".rc_loadmore_other").attr("data-loaded", '0');
+			$(".rc_loadmore_other").attr("data-reqid", JData.data.request.id);
+			
+			getOtherRequests(JData.data.request.contact_id, 0, JData.data.request.id, true);
+			loadHistory(JData.data.request.id);
+			loadExtra(JData.data.request.id);
+			
+			$(".rc_list_main").slideUp();
+			$(".rc_request_main").slideDown();
+		} , "json");
+	}
+	
+	function getRequests(status, offset, reset, query)
+	{
+		$(".rc_loadmore").attr("data-statusid", status);
+		
+		if(query) {
+			$(".rc_loadmore").attr("data-query", query);
+		}
+		else {
+			$(".rc_loadmore").removeAttr("data-query");
+		}
+		
+		
+		$(".rc_list_main").slideDown();
+		$(".rc_request_main").slideUp();
+		$(".rc_loading_data").fadeIn();
+		
+		var request = '?plugin=recall&module=backend&action=getrequests';
+		var data = 'status='+status+'&offset='+offset;
+		if(query) 
+		{
+			request = '?plugin=recall&module=backend&action=searchrequests';
+			data = 'query='+query+'&offset='+offset;;
+		}
+		
+		$.post(request, data, function(JData) {
+			var tableTrs = "";
+			var counter = 0;
+			$.each(JData.data.requests, function(index, value) {
+				counter++;
+				
+				var is_new = "";
+				if(!value.is_new) { is_new = '<span class="rc_request_new"></span>'; }
+				
+				var status_name = "Без статуса";
+				if(value.status_code) { status_name = value.status_name; }
+				else { value.status_code='off'; }
+				
+				var product_name = "Не относится";
+				if(value.product_id) { product_name = '<a href="?action=products#/product/'+value.product_id+'/" target="blank">'+value.product_name+'</a>'; }
+				
+				var user_name = value.referrer_name;
+				if(value.contact_id) { user_name += '<br>От имени аккаунта:<a href="?action=customers#/id/'+value.contact_id+'" target="blank">'+value.contact_name+'</a>'; }
+				
+				var user_phone = "Нет данных";
+				if(value.referrer_phone) { user_phone = value.referrer_phone; }
+				
+				var user_email = "Нет данных";
+				if(value.referrer_email) { user_email = '<a href="mailto:'+value.referrer_email+'">'+value.referrer_email+'</a>'; }
+				
+				tableTrs += '\
+				<tr class="item_tr">\
+					<td class="drag_helper"><span class="rc_link_style rc_open_status" data-itemid="'+value.id+'">'+value.id+is_new+'</span></td>\
+					<td>'+user_name+'</td>\
+					<td>'+user_phone+'</td>\
+					<td>'+user_email+'</td>\
+					<td>'+product_name+'</td>\
+					<td><span style="color: '+value.color+';" class="rc_link_style rc_trigger_status" data-itemid="'+value.status_code+'">'+status_name+'</span></td>\
+					<td>'+value.deploy_time+'</td>\
+				<tr>\
+				';
+			});
+			if(reset == true) { $(".rc_request_table").find("tr:not('.header')").remove(); };
+			$(".rc_request_table tbody").append(tableTrs);
+			$(".rc_loading_data").fadeOut();
+			
+			var drag_tr = {};
+			$(".rc_request_table").find("tr:not('.header')").draggable({
+					helper: function() {
+						return $(this).find(".drag_helper").clone().css( { "border":"1px solid gray","border-radius":"3px" } );
+					},
+					start: function(event, ui) {
+						drag_tr.tr = this;
+						drag_tr.helper = ui.helper;
+					}
+			});
+			
+			if(reset == true) { $(".rc_loadmore").attr("data-loaded", counter); }
+			else { $(".rc_loadmore").attr("data-loaded", parseInt($(".rc_loadmore").attr("data-loaded"))+counter); }
+			$(".rc_requests_shown").html($(".rc_loadmore").attr("data-loaded"));
+			$(".rc_requests_total").html(JData.data.total);
+			if($(".rc_requests_shown").html() == $(".rc_requests_total").html()) { $(".rc_loadmore").addClass('rc_gray'); }
+			else { $(".rc_loadmore").removeClass('rc_gray'); }
+		} , "json");
+	}
+	
+	function getOtherRequests(user, offset, thisone, reset)
+	{
+		$(".rc_loadmore_other").attr("data-userid", user);
+		$.post('?plugin=recall&module=backend&action=getotherrequests', 'user='+user+'&offset='+offset+'&request='+thisone, function(JData) {
+			var tableTrs = "";
+			var counter = 0;
+			$.each(JData.data.requests, function(index, value) {
+				counter++;
+				
+				var status_name = "Без статуса";
+				if(value.status_code) { status_name = value.status_name; }
+				else { value.status_code='off'; }
+				
+				var product_name = "Не относится";
+				if(value.product_id) { product_name = '<a href="?action=products#/product/'+value.product_id+'/" target="blank">'+value.product_name+'</a>'; }
+				
+				tableTrs += '\
+				<tr class="item_tr">\
+					<td><span class="rc_link_style rc_open_status rc_scrolltop" data-itemid="'+value.id+'">'+value.id+'</span></td>\
+					<td>'+value.deploy_time+'</td>\
+					<td>'+product_name+'</td>\
+					<td><span style="color: '+value.color+';" class="rc_link_style rc_trigger_status" data-itemid="'+value.status_code+'">'+status_name+'</span></td>\
+					<td><textarea class="rc_other_textarea" readonly=true>'+value.request_text+'</textarea></td>\
+				<tr>\
+				';
+			});
+			if(reset == true) { $(".rc_other_requests").find("tr:not('.header')").remove(); };
+			$(".rc_other_requests tbody").append(tableTrs);
+			
+			if(reset == true) { $(".rc_loadmore_other").attr("data-loaded", counter); }
+			else { $(".rc_loadmore_other").attr("data-loaded", parseInt($(".rc_loadmore_other").attr("data-loaded"))+counter); }
+			$(".rc_requests_shown_other").html($(".rc_loadmore_other").attr("data-loaded"));
+			$(".rc_requests_total_other").html(JData.data.total);
+			if($(".rc_requests_shown_other").html() == $(".rc_requests_total_other").html()) { $(".rc_loadmore_other").addClass('rc_gray'); }
+			else { $(".rc_loadmore_other").removeClass('rc_gray'); }
+		} , "json");
+	}
+	
+	function loadHistory(request)
+	{
+		$.post('?plugin=recall&module=backend&action=loadrequesthistory', 'request='+request, function(JData) {
+			var tableTrs = "";
+			$.each(JData.data.history, function(index, value) {
+				var user_name = value.referrer_name;
+				if(value.user_id) { user_name = '<a href="?action=customers#/id/'+value.user_id+'" target="blank">'+value.contact_name+'</a>'; }
+				tableTrs += '\
+				<tr class="item_tr">\
+					<td>'+user_name+'</td>\
+					<td>'+value.comment+'</td>\
+					<td>'+value.deploy_time+'</td>\
+				<tr>\
+				';
+			});
+			$(".rc_request_history").find("tr:not('.header')").remove();
+			$(".rc_request_history tbody").append(tableTrs);
+		} , "json");
+	}
+	
+	function loadExtra(request)
+	{
+		$.post('?plugin=recall&module=backend&action=getrequestextrafields', 'request='+request, function(JData) {
+			var tableTrs = "";
+			$.each(JData.data.fields, function(index, value) {
+				tableTrs += '\
+				<tr class="item_tr">\
+					<td>'+value.field_name+'</td>\
+					<td>'+value.field_text+'</td>\
+				<tr>\
+				';
+			});
+			$(".rc_extra_fields").find("tr:not('.header')").remove();
+			$(".rc_extra_fields tbody").append(tableTrs);
+		} , "json");
+	}
+	
+	$(".rc_loadmore").click(function() {
+		getRequests($(this).attr("data-statusid"), $(this).attr("data-loaded"), false, $(this).attr("data-query"));
+	});
+	
+	$(".rc_loadmore_other").click(function() {
+		getOtherRequests($(this).attr("data-userid"), $(this).attr("data-loaded"), $(this).attr("data-reqid"), false);
+	});
+
+	$(".rc_all_requests").click(function() {
+		$(".rc_cath").removeClass("selected");
+		$(".rc_request_status_li").removeClass("selected");
+		$(this).addClass("selected");
+		$(".rc_list_title").html("Все запросы");
+		getRequests('e_all', 0, true);
+	});
+	
+	$(".rc_new_requests").click(function() {
+		$(".rc_cath").removeClass("selected");
+		$(".rc_request_status_li").removeClass("selected");
+		$(this).addClass("selected");
+		$(".rc_list_title").html("Новые запросы");
+		getRequests('e_new', 0, true);
+	});
+	
+	$(".rc_request_status_li").click(function() {
+		$(".rc_cath").removeClass("selected");
+		$(".rc_request_status_li").removeClass("selected");
+		$(this).addClass("selected");
+		$(".rc_list_title").html('Запросы со статусом "'+$(this).find(".rc_request_status_name").html()+'"');
+		getRequests($(this).attr("data-itemid"), 0, true);
+	});
+	
+	$(".rc_request_status_li").droppable({
+      hoverClass: "rc_drop_hover",
+	  drop: function(event, ui) {
+		//console.log('Moving request '+$(ui.draggable).find(".rc_open_status").attr("data-itemid")+' to status '+$(this).attr("data-itemid"));
+		var newid = $(this).attr("data-itemid");
+		$.post('?plugin=recall&module=backend&action=changerequeststatus', 'status='+$(this).attr("data-itemid")+'&request='+$(ui.draggable).find(".rc_open_status").attr("data-itemid"), function(JData) {
+			$.each(JData.data.status, function(index, value) {
+				$(".rc_status_list").find(".count[data-itemid='"+value.id+"']").html(value.request_count);
+			});
+			$(".rc_request_data_status").html('<span class="rc_link_style rc_trigger_status" data-itemid="'+newid+'">'+JData.data.new_name+'</span>');
+			if($(ui.draggable).find(".rc_open_status").attr("data-refresh-history")) {
+				loadHistory($(ui.draggable).find(".rc_open_status").attr("data-itemid"));
+			}
+		} , "json");
+      }
+    });
+	
+	$(".rc_trigger_status").live('click', function() {
+		$(".rc_request_status_li[data-itemid='"+$(this).attr("data-itemid")+"']").trigger('click');
+	});
+	
+	$("a.back").click(function() {
+		$(".rc_list_main").slideDown();
+		$(".rc_request_main").slideUp();
+		return false;
+	});
+	
+	$(".rc_scrolltop").live('click', function() {
+		$("html,body").animate( { scrollTop:0 } ,"slow");
+	});
+	
+	$(".rc_request_title").draggable({
+		helper: function() {
+			return $(this).find(".drag_helper").clone().css( { "border":"1px solid gray", "border-radius":"3px", "display": "block" } );
+		}
+	});
+	
+	$(".rc_remove_request").live('click', function() {
+		if(confirm("Вы действительно хотите безвозвратно удалить запрос №"+$(this).attr('data-itemid')+'?'))
+		{
+			$.post('?plugin=recall&module=backend&action=removerequest', 'request='+$(this).attr('data-itemid'), function(JData) {
+				$.each(JData.data.status, function(index, value) {
+					$(".rc_status_list").find(".count[data-itemid='"+value.id+"']").html(value.request_count);
+				});
+				$(".rc_all_requests").trigger('click');
+			} , "json");
+		}
+	});
+	
+	$(".rc_search_button").click(function() {
+		$(".rc_list_title").html('Поиск по запросу "'+escapeHtml($(".rc_search_query").val())+'"');
+		getRequests(-1, 0, true, $(".rc_search_query").val());
+	});
+	
+	$(".rc_set_unread").click(function() {
+		var btn = $(this);
+		$.post('?plugin=recall&module=backend&action=setrequestnew', 'request='+btn.attr('data-itemid'), function(JData) {
+			btn.hide();
+			$('.rc_open_status[data-itemid="'+btn.attr('data-itemid')+'"]').append('<span class="rc_request_new"></span>');
+			$('.rc_new_requests .count').html(parseInt($('.rc_new_requests .count').html())+1);
+		} , "json");
+	});
+	
+	getRequests('e_all', 0, true);
+	
+	{if $rc_set_onload}
+		openRequest({$rc_set_onload});
+	{/if}
+});
+</script>

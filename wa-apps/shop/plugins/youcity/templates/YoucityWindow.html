@@ -1,0 +1,37 @@
+<div id="city_win" style="display: none;">
+        <div class="grey_bg"></div>
+        <div class="youcity_content">
+            
+            <h5>Где вы находитесь?</h5>
+            {if $info && $country}
+              {if count($country) > 1}
+                <ul class="country-changer">
+                    <li {if !in_array('rus', $country)} style="display:none;" {/if} class="rus active" data-youcity="rus"><a ><i></i>Россия </a></li>
+                    <li {if !in_array('ukr', $country)} style="display:none;" {/if} class="ukr" data-youcity="ukr"><a ><i></i>Украина</a></li>
+                    <li {if !in_array('kaz', $country)} style="display:none;" {/if} class="kaz" data-youcity="kaz"><a ><i></i>Казахстан </a></li>
+                    <li {if !in_array('blr', $country)} style="display:none;" {/if} class="blr" data-youcity="blr"><a ><i></i>Белоруссия </a></li>
+                </ul>
+               {/if}
+            <div class="city-changer">
+                <span>Выбор города</span>
+                {foreach from=$info key=k item=v}
+                <ul class="city_list" data-youcitylist="{$k}">
+                    {foreach $v as $value}
+                    <li><a data-region="{$value.region}" data-country="{$k}" href=""><span id="city_active">{$value.city}</span></a></li>
+                    {/foreach}
+                </ul>
+                {/foreach}
+            </div>
+            {/if}
+            <div class="auto-city">
+                <h6>{if $info && $country}Другой город?{else}&nbsp;{/if}</h6>
+                <div class="auto-city-input">
+                <input type="text" name="youcity" title="Введите название города" placeholder="Введите название города" />
+                    <ul id="find_city" style="display: none;">
+                    </ul>
+                </div>
+            </div>            
+            <span class="youcity-close"></span>
+        </div>
+        
+</div>

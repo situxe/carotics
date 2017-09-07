@@ -1,0 +1,134 @@
+<div class="sidebar mini">
+    {if class_exists('shopSelectbycarPlugin')}
+        {shopSelectbycarPlugin::display()}
+    {/if}
+    {if $category.id != 558}
+        {if !empty($filters)}
+            <div class="side-filter desc side-add">
+                <h3>Фильтр товаров</h3>
+                <div class="filters{if !empty($theme_settings.ajax_filters)} ajax{/if}">
+                    <form method="get" action="{$wa->currentUrl(0,1)}">
+                        {foreach $filters as $fid => $filter}
+                            <p>
+                            {if $fid == 'price'}
+                                {$c = $wa->shop->currency(true)}
+                                <b>[`Price`]</b>
+                                <br>
+                                [`from`]
+                                <input type="text" name="price_min" {if $wa->get('price_min')}value="{(int)$wa->get('price_min')}"{/if} placeholder="{floor($filter.min)}">
+                                [`to`]
+                                <input type="text" name="price_max" {if $wa->get('price_max')}value="{(int)$wa->get('price_max')}"{/if} placeholder="{ceil($filter.max)}">
+                                {$c.sign}
+                            {else}
+                                {if $fid!=4}
+                                    <b>{$filter.name|escape}</b>
+                                    <br>
+                                {/if}
+                                {if $filter.type == 'boolean'}
+                                    <label><input type="radio" name="{$filter.code}"{if $wa->get($filter.code)} checked{/if} value="1"> [`Yes`]</label>
+                                    <br>
+                                    <label><input type="radio" name="{$filter.code}"{if $wa->get($filter.code) === '0'} checked{/if} value="0"> [`No`]</label>
+                                    <br>
+                                    <label><input type="radio" name="{$filter.code}"{if $wa->get($filter.code, '') === ''} checked{/if} value=""> [`Any`]</label>
+                                    <br>
+                                {elseif isset($filter.min)}
+                                    {$_v = $wa->get($filter.code)}
+                                    [`from`]
+                                    <input type="text" name="{$filter.code}[min]" placeholder="{$filter.min}" {if !empty($_v.min)}value="{$_v.min}"{/if}>
+                                    [`to`]
+                                    <input type="text" name="{$filter.code}[max]" placeholder="{$filter.max}" {if !empty($_v.max)}value="{$_v.max}"{/if}>
+                                    {if !empty($filter.unit)}
+                                        {$filter.unit.title}
+                                        {if $filter.unit.value != $filter.base_unit.value}<input type="hidden" name="{$filter.code}[unit]" value="{$filter.unit.value}">{/if}
+                                    {/if}
+                                {else}
+                                    <ul>
+                                        {foreach $filter.values as $v_id => $v}
+                                            <li>
+                                                <input id="filter-{$fid}-{$v_id}" type="checkbox" name="{$filter.code}[]" {if in_array($v_id, (array)$wa->get($filter.code, array()))}checked{/if} value="{$v_id}">
+                                                <label for="filter-{$fid}-{$v_id}">{$v}</label>
+                                            </li>
+                                        {/foreach}
+                                    </ul>
+                                {/if}
+                            {/if}
+                            </p>
+                        {/foreach}
+
+                        {if $wa->get('sort')}<input type="hidden" name="sort" value="{$wa->get('sort')|escape}">{/if}
+                        {if $wa->get('order')}<input type="hidden" name="order" value="{$wa->get('order')|escape}">{/if}
+                        {if empty($theme_settings.ajax_filters)}<input type="submit" value="[`Filter products`]">{/if}
+                    </form>
+                </div>
+                <a href="{$wa_app_url}catalog/{$category.url}" class="all" id="reset_filter">Посмотреть все запчасти <br>{$category.name}</a>
+            </div>
+        {/if}
+        <div class="desc side-add quick">
+            <h3>Быстрый фильтр по типу запчасти для Honda Civic 4D</h3>
+            <ul>
+                <li><a href="#">Фары</a></li>
+                <li><a href="#">Тюнинг фары</a></li>
+                <li><a href="#">Противотуманные фары</a></li>
+                <li><a href="#">Комплекты противотуманок</a></li>
+                <li><a href="#">Задние фонари</a></li>
+                <li><a href="#">Тюнинг фонари</a></li>
+                <li><a href="#">Стекла противотуманок</a></li>
+                <li><a href="#">Бамперы передние</a></li>
+            </ul>
+        </div>
+    {else}
+        <div class="side-popular desc side-add">
+            <h3>Популярные модели</h3>
+            <ul>
+                <li><img src="{$wa_theme_url}img/mini/1.png" alt=""> <a href="#">Mitsubishi Pajero Sport (2009 - )</a></li>
+                <li><img src="{$wa_theme_url}img/mini/2.png" alt=""> <a href="#">Toyota Camry V40 (2006 - 2011)</a></li>
+                <li><img src="{$wa_theme_url}img/mini/3.png" alt=""> <a href="#">Ford Focus 2 (2008 - 2010) рестайлинг</a></li>
+                <li><img src="{$wa_theme_url}img/mini/4.png" alt=""> <a href="#">Chevrolet Captiva (2006 - 2011)</a></li>
+                <li><img src="{$wa_theme_url}img/mini/1.png" alt=""> <a href="#">Opel Astra H (2004 - 2014)</a></li>
+                <li><img src="{$wa_theme_url}img/mini/2.png" alt=""> <a href="#">Volkswagen Jetta 5 (2005 - 2010)</a></li>
+                <li><img src="{$wa_theme_url}img/mini/3.png" alt=""> <a href="#">Nissan Note (2006 - 2009)</a></li>
+                <li><img src="{$wa_theme_url}img/mini/4.png" alt=""> <a href="#">Ford Focus 3 (2011 - 2014)</a></li>
+                <li><img src="{$wa_theme_url}img/mini/1.png" alt=""> <a href="#">Opel Mokka (2012 - )</a></li>
+                <li><img src="{$wa_theme_url}img/mini/2.png" alt=""> <a href="#">Mitsubishi Lancer 9 (2003 - 2009)</a></li>
+                <li><img src="{$wa_theme_url}img/mini/3.png" alt=""> <a href="#">Chevrolet Lacetti (2004 - 2013) хэтчбек</a></li>
+                <li><img src="{$wa_theme_url}img/mini/4.png" alt=""> <a href="#">Nissan Juke (2011 - )</a></li>
+            </ul>
+        </div>
+    {/if}
+</div>
+{*от старой темы*}
+<!-- plugin hook: 'frontend_nav' -->
+{* @event frontend_nav.%plugin_id% *}
+{*foreach $frontend_nav as $_}{$_}{/foreach*}
+<!-- plugin hook: 'frontend_nav_aux' -->
+{* @event frontend_nav_aux.%plugin_id% *}
+{*foreach $frontend_nav_aux as $_}{$_}{/foreach}
+
+<!-- product search -->
+<div class="search">
+    <form method="get" action="{$wa->getUrl('/frontend/search')}">
+    <input type="search" name="query" {if !empty($query)}value="{$query}"{/if} id="search" placeholder="[`Find products`]">
+    </form>
+</div>        
+
+<!-- info pages -->
+{$shop_pages=$wa->shop->pages()}
+{if $shop_pages}
+    {wa_print_tree tree=$shop_pages class="menu-v" attrs = 'id="page-list"' elem ='
+<a href=":url" title=":title">:name</a>' selected=$wa->param('page_id')}
+    <hr>
+{/if}
+
+<!-- category tree -->
+{if isset($category)}{$selected_category=$category.id}{else}{$selected_category=null}{/if}
+{wa_print_tree tree=$wa->shop->categories(0, null, true) selected=$selected_category unfolded=false class="menu-v category-tree" elem ='<a href=":url" title=":name">:name</a>'}
+
+<!-- tag cloud -->
+{if $cloud = $wa->shop->tags()}
+    <hr>
+    <div class="tags align-center">
+        {foreach $cloud as $tag}
+            <a href="{$wa_app_url}tag/{$tag.uri_name}/" style="font-size: {$tag.size}%; opacity: {$tag.opacity}">{$tag.name|escape}</a>
+        {/foreach}
+    </div>
+{/if*}

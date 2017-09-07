@@ -1,0 +1,10 @@
+{if !empty($nofollow)}
+    <!-- "nofollow" for pages not to be indexed, e.g. customer account -->
+    <meta name="robots" content="noindex,nofollow" />
+{/if}
+
+<!-- plugin hook: 'frontend_head' -->
+{* @event frontend_head.%plugin_id% *}
+{foreach $frontend_head as $_}
+    {$_}
+{/foreach}

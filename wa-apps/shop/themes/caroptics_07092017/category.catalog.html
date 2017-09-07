@@ -1,0 +1,64 @@
+{strip}
+    <div class="content-text">
+        <p>Вы на розничном сайте Caroptics.ru. Здесь купить фары для своего автомобиля может любой желающий из любого региона России.</p>
+        <p>Мы находимся в Екатеринбурге и одинаково легко можем отправлять фары в Воронеж или Анадырь. <span class="read-more mobile">Читать полностью</span></p>
+        <div class="more-text desc">
+            <p>Основное направление — это фары тайваньских производителей Depo, Sonar и Eagle eyes, а также противотуманные фары производства <b>DLAA</b> (Китай). Мы сделали ставку на хорошее качество и очень хорошую цену. <span class="read-less mobile">Скрыть</span></p>
+        </div>
+    </div>
+    <div class="content-pop-mark">
+        <div class="entry-title">
+            <h2 class="h3">Популярные марки</h2>
+            <a href="#" data-scroll=".content-all-mark" class="show-all">Посмотреть все</a>
+        </div>
+        <div class="pop-mark-wrapper">
+            {$bestcellers_mark=array('Mitsubishi','Toyota','Volkswagen','Chevrolet','Nissan','Ford','Kia','Opel','BMW','Hyundai')}
+            {foreach $category.subcategories as $sub_cat}
+                {if in_array($sub_cat.name,$bestcellers_mark)}
+                    <div class="block">
+                        <a href="{$sub_cat.url}">
+                            <div class="img">
+                                {if $sub_cat.image}
+                                    <img src="{$wa_url}wa-data/public/shop/categories/{$sub_cat.id}/{$sub_cat.id}{$sub_cat.image}">
+                                {/if}
+                            </div>
+                            {$sub_cat.name}
+                        </a>
+                    </div>
+                {/if}
+            {/foreach}
+        </div>
+    </div>
+    {if $category.subcategories}
+        {$subcategories = []}
+        {$liter = ''}
+        {foreach $category.subcategories as $sc}
+            {$f_liter = strtoupper(substr($sc.name, 0, 1))}
+            {$subcategories[$f_liter][] = $sc}
+        {/foreach}
+        <div class="content-all-mark">
+            <div class="entry-title">
+                <h2 class="h3">Все марки автомобилей</h2>
+            </div>
+            <div class="all-mark-wrapper">
+                <ul class="marks">
+                    {foreach $subcategories as $f_liter =>  $liter_subcategories}
+                        <li class="dropdown">
+                            <a role="button" class='drop-sum closed'>{$f_liter}</a>
+                            <div class="drop-menu">
+                                <ul>
+                                    {foreach $liter_subcategories as $lsc}
+                                        <li>
+                                            <a href="{$lsc.url}">{$lsc.name}</a>
+                                        </li>
+                                    {/foreach}
+                                </ul>
+                            </div>
+                        </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+    {/if}
+    {include file="working.html"}
+{/strip}

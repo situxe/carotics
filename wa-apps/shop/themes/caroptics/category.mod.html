@@ -1,0 +1,16 @@
+
+    <div class="content-text">
+        <div class="entry-title">
+            {include file="soc-widget.html"}
+            <h1 class="h3">Запчасти {$category.name}</h1>
+        </div>
+        {$category.description}
+    </div>
+    <div class="content-pop-products mod-wrapper">
+        <div class="entry-title">
+            <h2 class="h3">Запчасти для автомобилей {$category.name}</h2>
+        </div>
+        <a href="#" class="more-prod mobile green-href">Посмотреть остальные товары на {$category.name}</a>
+        {include file="list-thumbs.html" sorting=!empty($category.params.enable_sorting)}
+    </div>
+    {include file="working.html"}
