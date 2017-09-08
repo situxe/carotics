@@ -6,15 +6,15 @@
       'content'=>[
         [
           'header'=>'',
-          'list'=>['Фары', 'Тюнинг фары', 'Указатели поворот', 'Противотуманные фары']
+          'list'=>[['name'=>'Фары', 'url'=>'#'], ['name'=>'Тюнинг фары', 'url'=>'#'], ['name'=>'Указатели поворот', 'url'=>'#'], ['name'=>'Противотуманные фары', 'url'=>'#']]
         ],
         [
           'header'=>'',
-          'list'=>['Комплекты противотуманок', 'Ходовые огни', 'Задние фонари', 'Тюнинг фонари', 'Габариты']
+          'list'=>[['name'=>'Комплекты противотуманок', 'url'=>'#'], ['name'=>'Ходовые огни', 'url'=>'#'], ['name'=>'Задние фонари', 'url'=>'#'], ['name'=>'Тюнинг фонари', 'url'=>'#'], ['name'=>'Габариты', 'url'=>'#']]
         ],
         [
           'header'=>'',
-          'list'=>['Повторители поворта', 'Катафоты', 'Стёкла противотуманок', 'Стёкла фар']
+          'list'=>[['name'=>'Повторители поворта', 'url'=>'#'], ['name'=>'Катафоты', 'url'=>'#'], ['name'=>'Стёкла противотуманок', 'url'=>'#'], ['name'=>'Стёкла фар', 'url'=>'#']]
         ]
       ],
       'footer'=>[
@@ -43,15 +43,15 @@
       'content'=>[
         [
           'header'=>'по типу',
-          'list'=>['Галогенные лампы', 'Ксеноновые', 'Диодные', 'Сигнальные (габаритки)']
+          'list'=>[['name'=>'Галогенные лампы', 'url'=>'#'], ['name'=>'Ксеноновые', 'url'=>'#'], ['name'=>'Диодные', 'url'=>'#'], ['name'=>'Сигнальные (габаритки)', 'url'=>'#']]
         ],
         [
           'header'=>'по назначению',
-          'list'=>['Лампы в ближный свет', 'Лампы в противотуманки', 'Лампы в дальний', 'Лампы в габарит, стоп-сигналы, поворотники']
+          'list'=>[['name'=>'Лампы в ближный свет', 'url'=>'#'], ['name'=>'Лампы в противотуманки', 'url'=>'#'], ['name'=>'Лампы в дальний', 'url'=>'#'], ['name'=>'Лампы в габарит, стоп-сигналы, поворотники', 'url'=>'#']]
         ],
         [
           'header'=>'по цоколю',
-          'list'=>['h1, h2, h3, h4, hb1, hb2, hb3, hb4, h3c', 'd1s, d2h, d2s, d2r, d3s, d4s', 'w5w, w21w, p21w, r5w, p21/5w']
+          'list'=>[['name'=>'h1, h2, h3, h4, hb1, hb2, hb3, hb4, h3c', 'url'=>'#'], ['name'=>'d1s, d2h, d2s, d2r, d3s, d4s', 'url'=>'#'], ['name'=>'w5w, w21w, p21w, r5w, p21/5w', 'url'=>'#']]
         ]
       ],
       'footer'=>[
@@ -65,22 +65,24 @@
 {foreach $catalog as $item}
   <li class="np_wrapper">
     <a href="{$item.url}">{$item.name}</a>
-  </li>
-  <div class="npw_content">
-    {foreach $item.inPart.content as $contentElem}
-    <div class = 'npwc_item'>
-      <div class="npwci_header">{$contentElem.header}</div>
-      <div class="npwci_list">
-        {foreach $contentElem.list as $listElem}
-        <div class="npwcil_item">
-          {$listElem}
+    <div class="npw_content">
+      <div class="npwc_listWrapper">
+        {foreach $item.inPart.content as $contentElem}
+        <div class = 'npwc_item'>
+          <div class="npwci_header">{$contentElem.header}</div>
+          <div class="npwci_list">
+            {foreach $contentElem.list as $listElem}
+              <div class="npwcil_item">
+                <a href="{$listElem.url}">{$listElem.name}</a>
+              </div>
+            {/foreach}
+          </div>
         </div>
         {/foreach}
       </div>
+      <div class="npw_footer">
+        <a href="{$item.inPart.footer.url}">{$item.inPart.footer.value}</a>
+      </div>
     </div>
-    {/foreach}
-    <div class="npw_footer">
-      <a href="{$item.footer.url}">{$item.footer.value}</a>
-    </div>
-  </div>
+  </li>
 {/foreach}
