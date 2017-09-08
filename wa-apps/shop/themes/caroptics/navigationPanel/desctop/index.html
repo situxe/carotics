@@ -1,0 +1,86 @@
+{$catalog = [
+  [
+    'url'=>"`$wa_url`catalog/optika/",
+    'name'=>'Автомобильная оптика',
+    'inPart'=>[
+      'content'=>[
+        [
+          'header'=>'',
+          'list'=>['Фары', 'Тюнинг фары', 'Указатели поворот', 'Противотуманные фары']
+        ],
+        [
+          'header'=>'',
+          'list'=>['Комплекты противотуманок', 'Ходовые огни', 'Задние фонари', 'Тюнинг фонари', 'Габариты']
+        ],
+        [
+          'header'=>'',
+          'list'=>['Повторители поворта', 'Катафоты', 'Стёкла противотуманок', 'Стёкла фар']
+        ]
+      ],
+      'footer'=>[
+        value=>'Вся автомобильная оптика',
+        url=>''
+      ]
+    ]
+  ],
+  [
+    'url'=>"`$wa_url`catalog/komplekty_ptf/",
+    'name'=>'Кузовные запчасти',
+    'inPart'=>[
+      'content'=>[
+        [
+        'header'=>'Список ссылок "Кузовные запчасти"',
+        'list'=>''
+        ]
+      ],
+      'footer'=>[value=>'',url=>'']
+    ]
+  ],
+  [
+    'url'=>"`$wa_url`catalog/avtolampy/",
+    'name'=>'Автолампы',
+    'inPart'=>[
+      'content'=>[
+        [
+          'header'=>'по типу',
+          'list'=>['Галогенные лампы', 'Ксеноновые', 'Диодные', 'Сигнальные (габаритки)']
+        ],
+        [
+          'header'=>'по назначению',
+          'list'=>['Лампы в ближный свет', 'Лампы в противотуманки', 'Лампы в дальний', 'Лампы в габарит, стоп-сигналы, поворотники']
+        ],
+        [
+          'header'=>'по цоколю',
+          'list'=>['h1, h2, h3, h4, hb1, hb2, hb3, hb4, h3c', 'd1s, d2h, d2s, d2r, d3s, d4s', 'w5w, w21w, p21w, r5w, p21/5w']
+        ]
+      ],
+      'footer'=>[
+        value=>'Вся автомобильная оптика',
+        url=>''
+      ]
+    ]
+  ]
+]}
+
+{foreach $catalog as $item}
+  <li class="np_wrapper">
+    <a href="{$item.url}">{$item.name}</a>
+  </li>
+  <div class="npw_content">
+    {foreach $item.inPart.content as $contentElem}
+    <div class = 'npwc_item'>
+      <div class="npwci_header">{$contentElem.header}</div>
+      <div class="npwci_list">
+        {foreach $contentElem.list as $listElem}
+        <div class="npwcil_item">
+          {$listElem}
+        </div>
+        {/foreach}
+      </div>
+    </div>
+    {/foreach}
+    <div class="npw_footer">
+      <a href="{$item.footer.url}">{$item.footer.value}</a>
+    </div>
+  </div>
+{/foreach}
