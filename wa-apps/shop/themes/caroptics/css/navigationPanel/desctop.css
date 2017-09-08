@@ -23,6 +23,9 @@
   font-size: 20px;
   line-height: 54px;
 }
+.npwci_list[data-on-socle] .npwcil_item a::after{
+  content: ',';
+}
 .npwci_list .npwcil_item > a:hover{
   color: #754a4a;
 }
