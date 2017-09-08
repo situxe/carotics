@@ -23,8 +23,11 @@
   font-size: 20px;
   line-height: 54px;
 }
-.npwci_list[data-on-socle] .npwcil_item a::after{
+.npwci_list.on_socle .npwcil_item a::after{
   content: ',';
+}
+.npwci_list.on_socle .npwcil_item a:last-child::after{
+  content: '';
 }
 .npwci_list .npwcil_item > a:hover{
   color: #754a4a;
