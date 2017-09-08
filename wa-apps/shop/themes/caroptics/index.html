@@ -118,16 +118,7 @@
     </div>
     <div class="row cat-nav">
         <div class="container">
-            <ul class="desc">
-                <li><a href="{$wa_url}catalog/optika/">Автомобильная оптика</a></li>
-                <li><a href="{$wa_url}catalog/komplekty_ptf/">Кузовные запчасти</a></li>
-                <li><a href="{$wa_url}catalog/avtolampy/">Автолампы</a></li>
-            </ul>
-            <ul class="mobile">
-                <li><a href="catalog.html">Каталог</a></li>
-                <li class="filter-btn"><a href="#">Выбор по автомобилю</a></li>
-                <li><a href="{$wa->getUrl('shop/frontend/cart')}">Корзина</a></li>
-            </ul>
+            {include file="./navigationPanel/index.html" inline}
         </div>
     </div>
     <div class="row main{if $action == 'category'} cat{/if}">
