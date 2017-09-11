@@ -1,8 +1,7 @@
 @import "desctop.css";
 
 .cat-nav .container{
-  background-color: #828282;
-  border-bottom: 3px solid #bb2121;
+  padding: 0;
 }
 .cat-nav ul{
   padding: 0;
@@ -13,17 +12,23 @@
 .cat-nav ul li{
   float: left;
   width: 33.33%;
-  text-align: center
+  text-align: center;
+  background-color: #828282;
+  border-bottom: 3px solid #bb2121;
+}
+.cat-nav ul li a{
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Ubuntu', sans-serif;
 }
 .cat-nav ul li:hover{
-  background-color: #f1f1f1;
-  transition: background-color .2s;
+background-color: #f1f1f1;
+transition: background-color .2s;
 }
 .cat-nav ul li:hover a{
   color: #000;
 }
 .cat-nav .mobile{
-  margin: 0 -15px;
   overflow: hidden;
 }
 .cat-nav .mobile li{
@@ -31,14 +36,6 @@
 }
 .cat-nav .mobile li:last-child{
   border-right: 0;
-}
-.cat-nav ul li a{
-  color: #fff;
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 54px;
-  text-decoration: none;
-  font-family: 'Ubuntu', sans-serif;
 }
 @media (max-width: 991px){
   .cat-nav .container{

@@ -1,3 +1,8 @@
+.npw_header {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 54px;
+}
 .np_wrapper:hover .npw_content {
   opacity: 1;
   display: block;
@@ -18,10 +23,13 @@
   text-align: left;
   justify-content: space-around;
 }
+.npw_footer a,
+.npwc_listWrapper a{
+  font-size: 14px;
+  line-height: 24px;
+}
 .npwc_item {
   padding: 10px;
-  font-size: 20px;
-  line-height: 54px;
 }
 .npwci_list.on_socle .npwcil_item a::after{
   content: ',';
@@ -29,8 +37,18 @@
 .npwci_list.on_socle .npwcil_item a:last-child::after{
   content: '';
 }
+.npw_content .npw_footer a,
+.npwci_list .npwcil_item a{
+  padding: 0 0 1px;
+  border-bottom: 1px solid;
+}
+.npw_content .npw_footer > a:hover,
 .npwci_list .npwcil_item > a:hover{
   color: #754a4a;
+  border-bottom: none;
+}
+.npw_footer {
+  margin: 0 0 10px;
 }
 .npw_footer,
 .npwci_header {
